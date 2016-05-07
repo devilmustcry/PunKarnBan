@@ -9,9 +9,13 @@ public abstract class Item {
 
     private String description;
 
-    public Item(String name,String description) {
+    private int cost;
+
+    public Item(String name, String description, int cost) {
         this.name = name;
         this.description = description;
+        this.cost = cost;
+
     }
 
 
