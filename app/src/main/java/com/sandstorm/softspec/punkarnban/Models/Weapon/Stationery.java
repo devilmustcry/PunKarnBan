@@ -4,7 +4,7 @@ package com.sandstorm.softspec.punkarnban.Models.Weapon;
  * Created by FTTX on 5/7/2016 AD.
  */
 public class Stationery {
-    private Stationery instance;
+    private static Stationery instance;
     private int level;
     private long wpt;
     private String name;
@@ -15,7 +15,7 @@ public class Stationery {
         name = "Standard pencil";
     }
 
-    public Stationery getInstance(){
+    public static Stationery getInstance(){
         if(instance == null){
             instance = new Stationery();
         }
