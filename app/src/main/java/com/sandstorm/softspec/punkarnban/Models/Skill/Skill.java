@@ -6,10 +6,24 @@ package com.sandstorm.softspec.punkarnban.Models.Skill;
 public class Skill {
 
     private String name;
+    private int level;
+    private int price;a
 
     public Skill(String name){
         this.name = name;
+        level = 1;
     }
 
+    public void levelUp(){
+        level++;
+    }
+
+    public int getLevel(){
+        return this.level;
+    }
+
+    public int getPrice(){
+        return 100*level;
+    }
 
 }
