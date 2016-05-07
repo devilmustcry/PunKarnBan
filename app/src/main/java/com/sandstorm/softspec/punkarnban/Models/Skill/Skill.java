@@ -7,7 +7,7 @@ public class Skill {
 
     private String name;
     private int level;
-    private int price;a
+    private int price;
 
     public Skill(String name){
         this.name = name;
