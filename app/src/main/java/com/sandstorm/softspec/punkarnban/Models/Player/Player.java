@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Player {
 
-    private static Player instance;
+//    private static Player instance;
 
     private String name;
     private long wpt;
@@ -21,7 +21,7 @@ public class Player {
     private Stationery stationery;
     private List<Skill> skills;
 
-    private Player(String name) {
+    public Player(String name) {
         this.name = name;
         wpt = 0;
         items = new ArrayList<Item>();
@@ -52,6 +52,10 @@ public class Player {
 
     public void levelUpStationary() {
         //levelUp
+    }
+
+    public void tap() {
+        //tap
     }
 
 
