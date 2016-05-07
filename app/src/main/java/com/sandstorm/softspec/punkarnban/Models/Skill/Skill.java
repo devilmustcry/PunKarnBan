@@ -11,7 +11,7 @@ public class Skill {
 
     public Skill(String name){
         this.name = name;
-        level = 1;
+        level = 0;
     }
 
     public void levelUp(){
