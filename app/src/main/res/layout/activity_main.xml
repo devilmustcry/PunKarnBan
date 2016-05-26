@@ -19,8 +19,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/test_text"
@@ -33,8 +32,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="4">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/tap"
@@ -51,12 +49,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3">
+            android:layout_weight="3"
+            android:orientation="vertical">
 
-            <TextView
+
+           <android.support.design.widget.TabLayout
+               android:id="@+id/upgrade_layout"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+
+           </android.support.design.widget.TabLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/upgrade_detail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="SHOP"/>
+                android:layout_height="match_parent">
+
+
+
+            </android.support.v4.view.ViewPager>
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="SHOP"/>-->
 
         </LinearLayout>
 
