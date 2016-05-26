@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.sandstorm.softspec.punkarnban.Fragments.RecruitFragment;
 import com.sandstorm.softspec.punkarnban.Fragments.ShopFragment;
+import com.sandstorm.softspec.punkarnban.Fragments.SkillFragment;
 
 /**
  * Created by FTTX on 5/21/2016 AD.
@@ -26,11 +27,14 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
 
             case 0 :
-                ShopFragment shop = new ShopFragment();
+                Fragment shop = new ShopFragment();
                 return shop;
             case 1 :
-                RecruitFragment recuit = new RecruitFragment();
+                Fragment recuit = new RecruitFragment();
                 return recuit;
+            case 2 :
+                Fragment skill = new SkillFragment();
+                return skill;
             default:
                 return null;
         }

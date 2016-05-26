@@ -2,6 +2,7 @@ package com.sandstorm.softspec.punkarnban.Activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Canvas;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -12,10 +13,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sandstorm.softspec.punkarnban.Adapters.PagerAdapter;
 import com.sandstorm.softspec.punkarnban.R;
+import com.sandstorm.softspec.punkarnban.etc.HealthBar;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     private PagerAdapter adapter;
 
+    private HealthBar healthBar;
+
 
 
     int val = 0;
@@ -50,25 +55,33 @@ public class MainActivity extends AppCompatActivity {
     private void initComponents() {
 
         tap = (ImageView) findViewById(R.id.tap);
-        valText = (TextView) findViewById(R.id.test_text);
+        valText = (TextView) findViewById(R.id.work_health_text);
 
         tap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(val%2==0){
+                if (val % 2 == 0) {
                     tap.setImageResource(R.drawable.tap_tapping);
 
-                }
-                else
+                } else
                     tap.setImageResource(R.drawable.tap_default);
 
-                valText.setText(val++ + "");
+                if (val >= healthBar.getMax()) {
+                    healthBar.setProgress(0);
+                    healthBar.setText("0/100");
+                    val = 0;
+                }
+                healthBar.setProgress(++val);
+//                valText.setText(val + "/100");
+                healthBar.setText(val + "/100");
+
             }
         });
 
         upgradeTab = (TabLayout) findViewById(R.id.upgrade_layout);
         upgradeTab.addTab(upgradeTab.newTab().setText("Shop"));
         upgradeTab.addTab(upgradeTab.newTab().setText("Recruit"));
+        upgradeTab.addTab(upgradeTab.newTab().setText("Skill"));
         upgradeTab.setTabGravity(TabLayout.GRAVITY_FILL);
 
         upgradeDetail = (ViewPager) findViewById(R.id.upgrade_detail);
@@ -93,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        healthBar = (HealthBar) findViewById(R.id.work_health_bar);
+        healthBar.setMax(100);
+
+
 
 
 
