@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -17,19 +18,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sandstorm.softspec.punkarnban.Adapters.PagerAdapter;
+import com.sandstorm.softspec.punkarnban.Models.Game.Game;
+import com.sandstorm.softspec.punkarnban.Models.Works.Homework;
+import com.sandstorm.softspec.punkarnban.Models.Works.Work;
 import com.sandstorm.softspec.punkarnban.R;
 import com.sandstorm.softspec.punkarnban.etc.HealthBar;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Observer{
 
 
     private ImageView tap;
-
-    private TextView valText;
 
     private TabLayout upgradeTab;
 
@@ -39,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private HealthBar healthBar;
 
+    private Game game;
 
 
     int val = 0;
@@ -54,27 +60,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void initComponents() {
 
+        game = new Game();
+        game.addObserver(this);
+
         tap = (ImageView) findViewById(R.id.tap);
-        valText = (TextView) findViewById(R.id.work_health_text);
 
         tap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (val % 2 == 0) {
-                    tap.setImageResource(R.drawable.tap_tapping);
-
-                } else
-                    tap.setImageResource(R.drawable.tap_default);
-
-                if (val >= healthBar.getMax()) {
-                    healthBar.setProgress(0);
-                    healthBar.setText("0/100");
-                    val = 0;
-                }
-                healthBar.setProgress(++val);
-//                valText.setText(val + "/100");
-                healthBar.setText(val + "/100");
-
+                changeImage();
+                game.tap();
             }
         });
 
@@ -108,7 +103,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         healthBar = (HealthBar) findViewById(R.id.work_health_bar);
-        healthBar.setMax(100);
+        Work work = game.initWork();
+        healthBar.setNameText(work.getName());
+        healthBar.setHealthText("0/" + work.getHp());
+        healthBar.setMax(work.getHp());
 
 
 
@@ -116,4 +114,41 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void changeImage() {
+
+        if (val % 2 == 0) {
+            tap.setImageResource(R.drawable.tap_tapping);
+            val = 1;
+
+        } else{
+            tap.setImageResource(R.drawable.tap_default);
+            val = 2;
+        }
+
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+
+
+        if(data == null) return;
+
+        if(data.getClass() == Homework.class) {
+           
+            Work work = (Homework) data;
+            healthBar.setProgress(0);
+            healthBar.setHealthText("0/" + work.getHp());
+            healthBar.setNameText(work.getName());
+            healthBar.setMax(work.getHp());
+        }
+        if(data.getClass() == Integer.class) {
+
+            int process = (int) data;
+            healthBar.setProgress(process);
+            healthBar.setHealthText(process + "/" + healthBar.getText().split("/")[1]);
+        }
+
+
+
+    }
 }

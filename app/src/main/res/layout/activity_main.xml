@@ -17,21 +17,66 @@
         android:orientation="vertical"
         >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="6"
+
             >
 
             <TextView
-                android:id="@+id/work_health_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="10pt"
-                android:text="kuy"
+                android:textSize="7pt"
+                android:text="Point : "
+                android:layout_weight="1"
                />
+            <TextView
+                android:id="@+id/player_point"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="7pt"
+                android:text="0"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="7pt"
+                android:text="Gold : "
+                android:layout_weight="1"
+
+                />
+            <TextView
+                android:id="@+id/player_gold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="7pt"
+                android:text="0"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="7pt"
+                android:text="Knowledge : "
+                android:layout_weight="1"
+                />
+            <TextView
+                android:id="@+id/player_knowledge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="7pt"
+                android:text="0"
+                android:layout_weight="1"
+                />
 
 
-        </RelativeLayout>
+
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

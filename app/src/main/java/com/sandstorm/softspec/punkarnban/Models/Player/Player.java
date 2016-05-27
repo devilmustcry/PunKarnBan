@@ -16,16 +16,17 @@ public class Player {
 //    private static Player instance;
 
     private String name;
-    private long wpt;
+    private int wpt;
     private List<Item> items;
     private Stationery stationery;
     private List<Skill> skills;
 
     public Player(String name) {
         this.name = name;
-        wpt = 0;
+
         items = new ArrayList<Item>();
         stationery = Stationery.getInstance();
+        setWpt(stationery.getWPT());
         skills = new ArrayList<Skill>();
 
         skills.add(new Bio());
@@ -51,11 +52,18 @@ public class Player {
     }
 
     public void levelUpStationary() {
-        //levelUp
+        stationery.levelUp();
+        setWpt(stationery.getWPT());
     }
 
-    public void tap() {
-        //tap
+    public int tap() {
+        return wpt;
+    }
+
+    public void setWpt(int wpt) {
+
+        this.wpt = wpt;
+
     }
 
 

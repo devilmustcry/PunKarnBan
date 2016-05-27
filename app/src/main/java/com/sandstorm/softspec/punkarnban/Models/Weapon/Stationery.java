@@ -9,7 +9,7 @@ import java.util.List;
 public class Stationery {
     private static Stationery instance;
     private int level;
-    private long wpt;
+    private int wpt;
     private long price;
     private final String [] names  = {"Rusty pencil", "Standard pencil" , "Silver pencil" , "Platinum pencil" , "Chairman pencil",
             "Embedded Computer pencil" , "Quantum Computer pencil" , "Heavenly Being pencil" ,
@@ -36,7 +36,7 @@ public class Stationery {
         return price;
     }
 
-    public long getWPT(){
+    public int getWPT(){
         return wpt;
     }
 
