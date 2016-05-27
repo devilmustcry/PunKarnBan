@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.sandstorm.softspec.punkarnban.Adapters.PagerAdapter;
 import com.sandstorm.softspec.punkarnban.Models.Game.Game;
 import com.sandstorm.softspec.punkarnban.Models.Works.Homework;
+import com.sandstorm.softspec.punkarnban.Models.Works.Project;
 import com.sandstorm.softspec.punkarnban.Models.Works.Work;
 import com.sandstorm.softspec.punkarnban.R;
 import com.sandstorm.softspec.punkarnban.etc.DamagePool;
@@ -154,9 +155,9 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
         if(data == null) return;
 
-        if(data.getClass() == Homework.class) {
-           
-            Work work = (Homework) data;
+        if(data.getClass() == Homework.class || data.getClass() == Project.class) {
+
+            Work work = (Work) data;
             healthBar.setProgress(0);
             healthBar.setHealthText("0/" + work.getHp());
             healthBar.setNameText(work.getName());
