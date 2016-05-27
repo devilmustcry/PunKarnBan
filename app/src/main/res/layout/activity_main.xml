@@ -95,16 +95,38 @@
 
 
                 />
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/relative">
 
-            <ImageView
-                android:id="@+id/tap"
-                android:src="@drawable/tap_default"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:keepScreenOn="true"
-                />
+            <!--<ImageView-->
+                <!--android:id="@+id/tap"-->
+                <!--android:src="@drawable/tap_default"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:gravity="center"-->
+                <!--android:keepScreenOn="true"-->
+                <!--/>-->
+                <ImageView
+                    android:id="@+id/tap"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/tap_default" />
 
+            <!--<TextView-->
+                <!--android:id="@+id/wps_tap"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_marginTop="40dp"-->
+                <!--android:layout_centerHorizontal="true" />-->
+
+            </RelativeLayout>
 
         </LinearLayout>
 

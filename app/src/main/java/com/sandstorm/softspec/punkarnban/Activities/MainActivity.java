@@ -3,6 +3,7 @@ package com.sandstorm.softspec.punkarnban.Activities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -12,9 +13,12 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sandstorm.softspec.punkarnban.Adapters.PagerAdapter;
@@ -22,7 +26,10 @@ import com.sandstorm.softspec.punkarnban.Models.Game.Game;
 import com.sandstorm.softspec.punkarnban.Models.Works.Homework;
 import com.sandstorm.softspec.punkarnban.Models.Works.Work;
 import com.sandstorm.softspec.punkarnban.R;
+import com.sandstorm.softspec.punkarnban.etc.DamagePool;
 import com.sandstorm.softspec.punkarnban.etc.HealthBar;
+
+import org.w3c.dom.Text;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -33,6 +40,7 @@ import java.util.Observer;
  */
 public class MainActivity extends AppCompatActivity implements Observer{
 
+    Animation animMove;
 
     private ImageView tap;
 
@@ -63,13 +71,26 @@ public class MainActivity extends AppCompatActivity implements Observer{
         game = new Game();
         game.addObserver(this);
 
+//        final TextView wps_tap = (TextView)findViewById(R.id.wps_tap);
+//        wps_tap.setText("10");
+
         tap = (ImageView) findViewById(R.id.tap);
 
+        final DamagePool damagePool = new DamagePool();
+        final RelativeLayout ll = (RelativeLayout)findViewById(R.id.relative);
+
+
+        Thread t = new Thread(damagePool);
+
+        t.start();
         tap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changeImage();
                 game.tap();
+                damagePool.addPool(getApplicationContext(),ll);
+
+
             }
         });
 
