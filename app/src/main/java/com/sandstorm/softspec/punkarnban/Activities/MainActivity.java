@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
     private void initComponents() {
 
-        game = new Game();
+        game = Game.getInstance();
         game.addObserver(this);
 
 //        final TextView wps_tap = (TextView)findViewById(R.id.wps_tap);
