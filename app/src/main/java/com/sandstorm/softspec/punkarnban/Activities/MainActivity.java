@@ -41,23 +41,52 @@ import java.util.Observer;
  */
 public class MainActivity extends AppCompatActivity implements Observer{
 
-    Animation animMove;
-
+    /**
+     * ImageView for main charactor (The one that you tap)
+     */
     private ImageView tap;
+
+    /**
+     * TabLayout for upgradable
+     */
 
     private TabLayout upgradeTab;
 
+    /**
+     * ViewPager for upgradable detail
+     */
+
     private ViewPager upgradeDetail;
+
+    /**
+     * adapter for view pager
+     */
 
     private PagerAdapter adapter;
 
+    /**
+     * HealthBar is a ProcessBar decorate with textview (name and hp)
+     */
+
     private HealthBar healthBar;
+
+    /**
+     * Game is controller of this game
+     */
 
     private Game game;
 
+    /**
+     * val use to set the image (will change into more suitable way later)
+     */
 
-    int val = 0;
+    private int val = 0;
 
+
+    /**
+     * Create an activity
+     * @param savedInstanceState : Don't know what is it....
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,43 +96,49 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
     }
 
+    /**
+     * init Component in activity
+     */
     private void initComponents() {
 
-        game = Game.getInstance();
-        game.addObserver(this);
-
-//        final TextView wps_tap = (TextView)findViewById(R.id.wps_tap);
-//        wps_tap.setText("10");
-
-        tap = (ImageView) findViewById(R.id.tap);
-
-        final DamagePool damagePool = new DamagePool();
-        final RelativeLayout ll = (RelativeLayout)findViewById(R.id.relative);
+        game = Game.getInstance(); //get instance from game
+        game.addObserver(this); // add this as an obsever to observe game
 
 
-        Thread t = new Thread(damagePool);
+        tap = (ImageView) findViewById(R.id.tap); //get image from view
 
-        t.start();
-        tap.setOnClickListener(new View.OnClickListener() {
+        final DamagePool damagePool = new DamagePool(); // damage pool (graphic reason)
+        final RelativeLayout ll = (RelativeLayout)findViewById(R.id.relative); //get relativelayout
+
+
+        Thread t = new Thread(damagePool); //create a thread
+
+        t.start();//start a thread
+
+        tap.setOnClickListener(new View.OnClickListener() {// set onclick listener for image
             @Override
             public void onClick(View v) {
-                changeImage();
-                int damage = game.tap();
-                damagePool.addPool(getApplicationContext(),ll,damage);
+                changeImage();//change image when tap
+                int damage = game.tap();//invoke game tap and return the damage
+                damagePool.addPool(getApplicationContext(),ll,damage);//add into damagePool
 
 
             }
         });
 
+        //Initialize upgradeTab
         upgradeTab = (TabLayout) findViewById(R.id.upgrade_layout);
         upgradeTab.addTab(upgradeTab.newTab().setText("Shop"));
         upgradeTab.addTab(upgradeTab.newTab().setText("Recruit"));
         upgradeTab.addTab(upgradeTab.newTab().setText("Skill"));
         upgradeTab.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        //Initialize upgradeDetail and adapter
         upgradeDetail = (ViewPager) findViewById(R.id.upgrade_detail);
         adapter = new PagerAdapter(getSupportFragmentManager(), upgradeTab.getTabCount() );
         upgradeDetail.setAdapter(adapter);
+
+        //addOnPageChangeListener and setOnTabSelectedListener
         upgradeDetail.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(upgradeTab));
         upgradeTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -124,6 +159,8 @@ public class MainActivity extends AppCompatActivity implements Observer{
             }
         });
 
+
+        //Find Healthbar from view
         healthBar = (HealthBar) findViewById(R.id.work_health_bar);
         Work work = game.initWork();
         healthBar.setNameText(work.getName());
@@ -136,19 +173,28 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
     }
 
+    /**
+     * Change image method
+     */
     private void changeImage() {
 
         if (val % 2 == 0) {
             tap.setImageResource(R.drawable.tap_tapping);
             val = 1;
 
-        } else{
+        } else {
             tap.setImageResource(R.drawable.tap_default);
             val = 2;
         }
 
     }
 
+
+    /**
+     * Update method call when observable call notifysetchanged()
+     * @param observable : call from which observable
+     * @param data : data sent from observable
+     */
     @Override
     public void update(Observable observable, Object data) {
 
