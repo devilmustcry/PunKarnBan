@@ -197,10 +197,10 @@ public class MainActivity extends AppCompatActivity implements Observer{
             healthBar.setNameText(work.getName());
             healthBar.setMax(work.getHp());
             projectSet = false;
-
+            tap.setTime( "");
+            tap.postInvalidate();
         }
-
-        if(data.getClass() == Project.class) {
+        else if(data.getClass() == Project.class) {
             Log.i("Timer", "Timing");
             Project work = (Project) data;
             if(!projectSet) {
@@ -210,8 +210,9 @@ public class MainActivity extends AppCompatActivity implements Observer{
                 healthBar.setMax(work.getHp());
                 projectSet = true;
             }
-
             tap.setTime(work.getTime() + "");
+//            tap.invalidate();
+            tap.postInvalidate();
         }
 
         if(data.getClass() == Integer.class) {

@@ -13,6 +13,7 @@ import com.sandstorm.softspec.punkarnban.Models.Works.ProjectFactory;
 import com.sandstorm.softspec.punkarnban.Models.Works.Work;
 import com.sandstorm.softspec.punkarnban.Models.Works.WorkFactory;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -107,12 +108,7 @@ public class Game extends Observable {
                 Log.i("Timer", "Work");
                 for (Recruit recruit : recruits) {
                     process += recruit.getDPS();
-                    if (isDone())
-                        levelUp();
-                    else {
-                        setChanged();
-                        notifyObservers(process);
-                    }
+                    checkLevelUp();
                 }
 
             }
@@ -127,9 +123,15 @@ public class Game extends Observable {
      */
     private void startProjectTimer(Project project) {
 
-
         projectTimer.schedule(new projectTimerTask(project),0,1000);
 
+    }
+
+    private void stopProjectTimer(){
+        projectTimer.cancel();
+//        projectTimer.purge();
+        projectTimer = new Timer();
+        Log.e("stop", "call");
     }
 
 
@@ -161,14 +163,21 @@ public class Game extends Observable {
     public int tap() {
         int tap = player.tap();
         process+=tap;
+        checkLevelUp();
+        return tap;
+    }
+
+    private void checkLevelUp(){
         if(isDone()) {
+            if(work.getClass() == Project.class){
+                stopProjectTimer();
+            }
             levelUp();
         }
         else {
             setChanged();
             notifyObservers(process);
         }
-        return tap;
     }
 
     /**
@@ -251,7 +260,7 @@ public class Game extends Observable {
     private boolean isDone() {
         Log.i("Process",process+"");
         Log.i("HP",work.getHp()+"");
-        if(process>= work.getHp()) {
+        if(process >= work.getHp()) {
             return true;
         }
         return false;
@@ -267,12 +276,10 @@ public class Game extends Observable {
 
         @Override
         public void run() {
-
             work.setTime(work.getTime() - 1);
             setChanged();
             notifyObservers(work);
-            if(work.getTime() == 0 ||isDone())
-                this.cancel();
+
 
         }
     }

@@ -50,7 +50,7 @@ public class TapImage extends ImageView {
         textPaint.getTextBounds(time, 0, time.length(), bound);
         textPaint.setColor(Color.RED);
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);
-        textPaint.setTextSize(20);
+        textPaint.setTextSize(50);
         int x = getWidth()/2  - bound.centerX();
         int y = (int)(getHeight()*0.25 - bound.centerY());
         canvas.drawText(time, x, y, textPaint);
@@ -59,6 +59,8 @@ public class TapImage extends ImageView {
 
     public void setTime(String time) {
         this.time = time;
-        drawableStateChanged();
+//        invalidate();
+//        refreshDrawableState();
+//        drawableStateChanged();
     }
 }
