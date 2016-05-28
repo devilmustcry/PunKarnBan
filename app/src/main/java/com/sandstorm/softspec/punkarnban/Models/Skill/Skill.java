@@ -1,29 +1,12 @@
 package com.sandstorm.softspec.punkarnban.Models.Skill;
 
 /**
- * Created by Warata on 5/7/16 AD.
+ * Created by Zen on 5/28/16.
  */
-public class Skill {
+public interface Skill{
 
-    private String name;
-    private int level;
-    private int price;
+    public int getApplySkillWPT();
+    public void levelUp();
 
-    public Skill(String name){
-        this.name = name;
-        level = 0;
-    }
-
-    public void levelUp(){
-        level++;
-    }
-
-    public int getLevel(){
-        return this.level;
-    }
-
-    public int getPrice(){
-        return 100*level;
-    }
 
 }

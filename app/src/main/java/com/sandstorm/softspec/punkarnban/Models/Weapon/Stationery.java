@@ -9,8 +9,12 @@ import java.util.List;
 public class Stationery {
     private static Stationery instance;
     private int level;
+
+
+
     private int wpt;
-    private long price;
+    private double price;
+
     private final String [] names  = {"Rusty pencil", "Standard pencil" , "Silver pencil" , "Platinum pencil" , "Chairman pencil",
             "Embedded Computer pencil" , "Quantum Computer pencil" , "Heavenly Being pencil" ,
             "The greatest ever made pencil" , "Pen"};
@@ -33,7 +37,7 @@ public class Stationery {
     }
 
     public long getPrice(){
-        return price;
+        return Math.round(price);
     }
 
     public int getWPT(){
@@ -42,7 +46,7 @@ public class Stationery {
 
     public void levelUp(){
         level = level++;
-        price = (int)Math.floor(price * 1.02);
+        price = price * 1.02;
     }
 
 

@@ -1,8 +1,6 @@
 package com.sandstorm.softspec.punkarnban.Models.Player;
 
 import com.sandstorm.softspec.punkarnban.Models.Items.Item;
-import com.sandstorm.softspec.punkarnban.Models.Skill.*;
-import com.sandstorm.softspec.punkarnban.Models.Skill.Math;
 import com.sandstorm.softspec.punkarnban.Models.Weapon.Stationery;
 
 import java.util.ArrayList;
@@ -19,7 +17,7 @@ public class Player {
     private int wpt;
     private List<Item> items;
     private Stationery stationery;
-    private List<Skill> skills;
+
 
     public Player(String name) {
         this.name = name;
@@ -27,13 +25,7 @@ public class Player {
         items = new ArrayList<Item>();
         stationery = Stationery.getInstance();
         setWpt(stationery.getWPT());
-        skills = new ArrayList<Skill>();
 
-        skills.add(new Bio());
-        skills.add(new Chem());
-        skills.add(new Eng());
-        skills.add(new Math());
-        skills.add(new Phy());
 
     }
 
@@ -47,9 +39,7 @@ public class Player {
         this.items.remove(index);
     }
 
-    public void levelUpSkill(int index) {
-        this.skills.get(index).levelUp();
-    }
+    
 
     public void levelUpStationary() {
         stationery.levelUp();
