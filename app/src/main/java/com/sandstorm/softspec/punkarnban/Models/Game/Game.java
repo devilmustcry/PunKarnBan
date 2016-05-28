@@ -7,7 +7,6 @@ import com.sandstorm.softspec.punkarnban.Models.Recruit.FriendFactory;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.Recruit;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.RecruitFactory;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.TeacherFactory;
-import com.sandstorm.softspec.punkarnban.Models.Works.Homework;
 import com.sandstorm.softspec.punkarnban.Models.Works.HomeworkFactory;
 import com.sandstorm.softspec.punkarnban.Models.Works.Project;
 import com.sandstorm.softspec.punkarnban.Models.Works.ProjectFactory;
@@ -21,26 +20,64 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
+ * Controller Class
  * Created by FTTX on 5/7/2016 AD.
  */
 public class Game extends Observable {
 
+    /**
+     * Create factory
+     */
     final private HomeworkFactory homeworkFactory = new HomeworkFactory();
     final private ProjectFactory projectFactory = new ProjectFactory();
 
 
+    /**
+     * Instance
+     */
     private static Game instance;
 
+    /**
+     * Player that play this game
+     */
     private Player player;
+    /**
+     * List of recruit in this game
+     */
     private List<Recruit> recruits;
+    /**
+     * Recruit Factory (will remove later)
+     */
     private RecruitFactory recruitFactory;
+    /**
+     * Work Factory
+     */
     private WorkFactory workFactory;
-    private Timer timer;
+    /**
+     * Timer for recruit Task
+     */
+    private Timer recruitTimer;
+    /**
+     * Timer for project countdown.
+     */
+    private Timer projectTimer;
 
+    /**
+     * Work that present in the game
+     */
     private Work work;
+    /**
+     * process of the work
+     */
     private Integer process;
+    /**
+     * Level of the game
+     */
     private int level;
 
+    /**
+     * Constructor
+     */
     private Game() {
         player = new Player("Name");
         level = getLevelFromSaved();
@@ -51,20 +88,26 @@ public class Game extends Observable {
 
     }
 
+    /**
+     * set Default Factory (homework)
+     */
     private void setDefaultFactory() {
         workFactory = homeworkFactory;
 
     }
 
-    public void startTimer() {
+    /**
+     * Start timer for recruit
+     */
+    public void startRecruitTimer() {
 
-        timer.schedule(new TimerTask() {
+        recruitTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Log.i("Timer","Work");
-                for(Recruit recruit : recruits) {
-                    process+= recruit.getDPS();
-                    if(isDone())
+                Log.i("Timer", "Work");
+                for (Recruit recruit : recruits) {
+                    process += recruit.getDPS();
+                    if (isDone())
                         levelUp();
                     else {
                         setChanged();
@@ -73,22 +116,48 @@ public class Game extends Observable {
                 }
 
             }
-        },0,1000);
+        }, 0, 1000);
 
+
+    }
+
+    /**
+     * Project limited timer
+     * @param time : time limited for project
+     */
+    private void startProjectTimer(Project project) {
+
+
+        projectTimer.schedule(new projectTimerTask(project),0,1000);
 
     }
 
 
 
+    /**
+     * Get level from last saved
+     * @return last level from saved
+     */
     public int getLevelFromSaved() {
-        return 1;
+        return 9;
     }
 
+    /**
+     * Initialize new work
+     * @return work
+     */
     public Work initWork() {
-
+        if(level%10 == 0)
+            workFactory = getWorkFactory("project");
+        else
+            workFactory = getWorkFactory("homework");
         return workFactory.create(level);
     }
 
+    /**
+     * Tap
+     * @return tap damage from player
+     */
     public int tap() {
         int tap = player.tap();
         process+=tap;
@@ -102,27 +171,47 @@ public class Game extends Observable {
         return tap;
     }
 
+    /**
+     * Hire a recruit
+     * @param name of the factory
+     */
     public void hire(String name) {
         recruitFactory = getFactory(name);
         recruits.add(recruitFactory.create());
-        if(timer == null) {
-            timer = new Timer();
-            startTimer();
+        if(recruitTimer == null) {
+            recruitTimer = new Timer();
+            startRecruitTimer();
         }
 
     }
 
-
-
+    /**
+     * Level up the stage
+     */
     private void levelUp() {
         level++;
         work = initWork();
+
+
         process = 0;
+        if(workFactory.getName().equalsIgnoreCase("project")) {
+            Project project = (Project) work;
+            if(projectTimer == null)
+                projectTimer = new Timer();
+            startProjectTimer(project);
+        }
+
         setChanged();
         notifyObservers(work);
 
     }
 
+
+    /**
+     * Get Recruit factory (Will remove)
+     * @param name
+     * @return
+     */
     public RecruitFactory getFactory(String name){
         if(name.equalsIgnoreCase("jittat")){
             return new TeacherFactory();
@@ -132,12 +221,33 @@ public class Game extends Observable {
         return null;
     }
 
+    /**
+     * Get work factory
+     * @param name of the factory
+     * @return work factory
+     */
+    public WorkFactory getWorkFactory(String name) {
+        if(name.equalsIgnoreCase("homework"))
+            return homeworkFactory;
+        else if(name.equalsIgnoreCase("project"))
+            return projectFactory;
+        return null;
+    }
+
+    /**
+     * getInstance
+     * @return game instance
+     */
     public static Game getInstance() {
         if(instance == null)
             instance = new Game();
         return instance;
     }
 
+    /**
+     * check whether work is done or not
+     * @return
+     */
     private boolean isDone() {
         Log.i("Process",process+"");
         Log.i("HP",work.getHp()+"");
@@ -145,6 +255,26 @@ public class Game extends Observable {
             return true;
         }
         return false;
+    }
+
+    private class projectTimerTask extends TimerTask {
+
+        private Project work;
+
+        private projectTimerTask(Project work) {
+            this.work = work;
+        }
+
+        @Override
+        public void run() {
+
+            work.setTime(work.getTime() - 1);
+            setChanged();
+            notifyObservers(work);
+            if(work.getTime() == 0 ||isDone())
+                this.cancel();
+
+        }
     }
 
 }

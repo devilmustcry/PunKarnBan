@@ -1,14 +1,9 @@
-package com.sandstorm.softspec.punkarnban.etc;
+package com.sandstorm.softspec.punkarnban.Graphic;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.Layout;
 import android.util.Log;
-import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.sandstorm.softspec.punkarnban.R;
 
 import java.util.ArrayList;
 import java.util.List;

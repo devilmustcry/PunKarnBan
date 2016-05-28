@@ -21,7 +21,7 @@ public class Stationery {
 
     private Stationery(){
         level = 1;
-        wpt = 1;
+        wpt = 100;
         price = 5;
     }
 

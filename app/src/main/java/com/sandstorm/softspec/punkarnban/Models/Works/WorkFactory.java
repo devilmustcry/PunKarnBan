@@ -6,5 +6,6 @@ package com.sandstorm.softspec.punkarnban.Models.Works;
 public interface WorkFactory {
 
     public Work create(int level);
+    public String getName();
 
 }

@@ -1,36 +1,23 @@
 package com.sandstorm.softspec.punkarnban.Activities;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.sandstorm.softspec.punkarnban.Adapters.PagerAdapter;
+import com.sandstorm.softspec.punkarnban.Graphic.TapImage;
 import com.sandstorm.softspec.punkarnban.Models.Game.Game;
 import com.sandstorm.softspec.punkarnban.Models.Works.Homework;
 import com.sandstorm.softspec.punkarnban.Models.Works.Project;
 import com.sandstorm.softspec.punkarnban.Models.Works.Work;
 import com.sandstorm.softspec.punkarnban.R;
-import com.sandstorm.softspec.punkarnban.etc.DamagePool;
-import com.sandstorm.softspec.punkarnban.etc.HealthBar;
-
-import org.w3c.dom.Text;
+import com.sandstorm.softspec.punkarnban.Graphic.DamagePool;
+import com.sandstorm.softspec.punkarnban.Graphic.HealthBar;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -44,7 +31,9 @@ public class MainActivity extends AppCompatActivity implements Observer{
     /**
      * ImageView for main charactor (The one that you tap)
      */
-    private ImageView tap;
+    private TapImage tap;
+
+    private boolean projectSet = false;
 
     /**
      * TabLayout for upgradable
@@ -105,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
         game.addObserver(this); // add this as an obsever to observe game
 
 
-        tap = (ImageView) findViewById(R.id.tap); //get image from view
+        tap = (TapImage) findViewById(R.id.tap); //get image from view
 
         final DamagePool damagePool = new DamagePool(); // damage pool (graphic reason)
         final RelativeLayout ll = (RelativeLayout)findViewById(R.id.relative); //get relativelayout
@@ -121,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements Observer{
                 changeImage();//change image when tap
                 int damage = game.tap();//invoke game tap and return the damage
                 damagePool.addPool(getApplicationContext(),ll,damage);//add into damagePool
-
 
             }
         });
@@ -201,14 +189,31 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
         if(data == null) return;
 
-        if(data.getClass() == Homework.class || data.getClass() == Project.class) {
+        if(data.getClass() == Homework.class ) {
 
             Work work = (Work) data;
             healthBar.setProgress(0);
             healthBar.setHealthText("0/" + work.getHp());
             healthBar.setNameText(work.getName());
             healthBar.setMax(work.getHp());
+            projectSet = false;
+
         }
+
+        if(data.getClass() == Project.class) {
+            Log.i("Timer", "Timing");
+            Project work = (Project) data;
+            if(!projectSet) {
+                healthBar.setProgress(0);
+                healthBar.setHealthText("0/" + work.getHp());
+                healthBar.setNameText(work.getName());
+                healthBar.setMax(work.getHp());
+                projectSet = true;
+            }
+
+            tap.setTime(work.getTime() + "");
+        }
+
         if(data.getClass() == Integer.class) {
 
             int process = (int) data;

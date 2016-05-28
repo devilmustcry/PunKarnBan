@@ -39,7 +39,7 @@ public class Player {
         this.items.remove(index);
     }
 
-    
+
 
     public void levelUpStationary() {
         stationery.levelUp();

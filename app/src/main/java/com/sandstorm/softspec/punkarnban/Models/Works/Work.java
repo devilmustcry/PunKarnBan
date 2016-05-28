@@ -3,7 +3,7 @@ package com.sandstorm.softspec.punkarnban.Models.Works;
 /**
  * Created by FTTX on 5/7/2016 AD.
  */
-public class Work {
+public abstract class Work {
 
     private int hp;
 
@@ -62,4 +62,6 @@ public class Work {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

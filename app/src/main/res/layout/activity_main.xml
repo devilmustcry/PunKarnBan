@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.sandstorm.softspec.punkarnban.etc.HealthBar
+            <com.sandstorm.softspec.punkarnban.Graphic.HealthBar
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:id="@+id/work_health_bar"
@@ -109,7 +109,7 @@
                 <!--android:gravity="center"-->
                 <!--android:keepScreenOn="true"-->
                 <!--/>-->
-                <ImageView
+                <com.sandstorm.softspec.punkarnban.Graphic.TapImage
                     android:id="@+id/tap"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

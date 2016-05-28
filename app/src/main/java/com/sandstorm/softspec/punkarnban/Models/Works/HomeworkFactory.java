@@ -21,4 +21,8 @@ public class HomeworkFactory implements WorkFactory {
         return new Homework(workName[index++], level*20, ++gold,point,exp);
     }
 
+    @Override
+    public String getName() {
+        return "homework";
+    }
 }

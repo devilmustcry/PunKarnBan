@@ -18,7 +18,13 @@ public class ProjectFactory implements WorkFactory {
 
     @Override
     public Work create(int level) {
+
         return new Project(projectName[ (int) Math.round(Math.random()*4)], level*100, gold,point,exp,time);
 
+    }
+
+    @Override
+    public String getName() {
+        return "project";
     }
 }
