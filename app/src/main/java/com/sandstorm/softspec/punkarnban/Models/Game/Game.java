@@ -119,11 +119,11 @@ public class Game extends Observable {
 
     /**
      * Project limited timer
-     * @param time : time limited for project
+     * @param project : time limited for project
      */
     private void startProjectTimer(Project project) {
 
-        projectTimer.schedule(new projectTimerTask(project),0,1000);
+        projectTimer.schedule(new projectTimerTask(project), 0, 1000);
 
     }
 
@@ -279,9 +279,19 @@ public class Game extends Observable {
             work.setTime(work.getTime() - 1);
             setChanged();
             notifyObservers(work);
+            if(work.getTime() == 0) {
+                this.cancel();
+                levelDown();
+            }
 
 
         }
+    }
+
+    private void levelDown() {
+        level-=10;
+        levelUp();
+
     }
 
 }
