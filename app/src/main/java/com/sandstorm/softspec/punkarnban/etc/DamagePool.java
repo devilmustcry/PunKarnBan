@@ -43,7 +43,7 @@ public class DamagePool implements Runnable {
         }
     }
 
-    public void addPool(Context context,RelativeLayout ll) {
+    public void addPool(Context context,RelativeLayout ll,int damage) {
         for(DamageText text : damageTextList) {
             if(!text.isActive()){
                 text.active();
@@ -55,7 +55,7 @@ public class DamagePool implements Runnable {
         }
 
         DamageText text = new DamageText(context);
-        text.setText("10");
+        text.setText(damage+"");
         text.setTextColor(Color.RED);
         text.setX((float) (ll.getWidth() * 0.75));
         text.setY((float) (ll.getHeight() * 0.25));

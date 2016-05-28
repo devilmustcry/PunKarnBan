@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements Observer{
             @Override
             public void onClick(View v) {
                 changeImage();
-                game.tap();
-                damagePool.addPool(getApplicationContext(),ll);
+                int damage = game.tap();
+                damagePool.addPool(getApplicationContext(),ll,damage);
 
 
             }

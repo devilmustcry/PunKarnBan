@@ -8,7 +8,11 @@ import com.sandstorm.softspec.punkarnban.Models.Recruit.Recruit;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.RecruitFactory;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.TeacherFactory;
 import com.sandstorm.softspec.punkarnban.Models.Works.Homework;
+import com.sandstorm.softspec.punkarnban.Models.Works.HomeworkFactory;
+import com.sandstorm.softspec.punkarnban.Models.Works.Project;
+import com.sandstorm.softspec.punkarnban.Models.Works.ProjectFactory;
 import com.sandstorm.softspec.punkarnban.Models.Works.Work;
+import com.sandstorm.softspec.punkarnban.Models.Works.WorkFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +25,16 @@ import java.util.TimerTask;
  */
 public class Game extends Observable {
 
+    final private HomeworkFactory homeworkFactory = new HomeworkFactory();
+    final private ProjectFactory projectFactory = new ProjectFactory();
+
+
     private static Game instance;
 
     private Player player;
     private List<Recruit> recruits;
-    private RecruitFactory factory;
+    private RecruitFactory recruitFactory;
+    private WorkFactory workFactory;
     private Timer timer;
 
     private Work work;
@@ -35,15 +44,20 @@ public class Game extends Observable {
     private Game() {
         player = new Player("Name");
         level = getLevelFromSaved();
+        setDefaultFactory();
         work = initWork();
         process = 0;
         recruits = new ArrayList<Recruit>();
-        timer = new Timer();
-        startTimer();
 
     }
 
-    private void startTimer() {
+    private void setDefaultFactory() {
+        workFactory = homeworkFactory;
+
+    }
+
+    public void startTimer() {
+
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -57,29 +71,25 @@ public class Game extends Observable {
                         notifyObservers(process);
                     }
                 }
+
             }
         },0,1000);
 
+
     }
+
+
 
     public int getLevelFromSaved() {
         return 1;
     }
 
     public Work initWork() {
-        if(work == null) {
-            work = new Homework("Test",level*20 , 100 , 10 , 1);
-        }
-        else{
-            work.setGold(work.getGold());
-            work.setHp(level * 20);
-            work.setPoint(work.getPoint());
-            work.setKnowledge(work.getKnowledge());
-        }
-        return work;
+
+        return workFactory.create(level);
     }
 
-    public void tap() {
+    public int tap() {
         int tap = player.tap();
         process+=tap;
         if(isDone()) {
@@ -89,21 +99,27 @@ public class Game extends Observable {
             setChanged();
             notifyObservers(process);
         }
+        return tap;
     }
 
     public void hire(String name) {
-        factory = getFactory(name);
-        recruits.add(factory.create());
+        recruitFactory = getFactory(name);
+        recruits.add(recruitFactory.create());
+        if(timer == null) {
+            timer = new Timer();
+            startTimer();
+        }
+
     }
 
 
 
     private void levelUp() {
         level++;
-        Work newWork = initWork();
+        work = initWork();
         process = 0;
         setChanged();
-        notifyObservers(newWork);
+        notifyObservers(work);
 
     }
 
@@ -123,6 +139,8 @@ public class Game extends Observable {
     }
 
     private boolean isDone() {
+        Log.i("Process",process+"");
+        Log.i("HP",work.getHp()+"");
         if(process>= work.getHp()) {
             return true;
         }
