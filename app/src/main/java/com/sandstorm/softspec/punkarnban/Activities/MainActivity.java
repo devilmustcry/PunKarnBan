@@ -6,12 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.sandstorm.softspec.punkarnban.Adapters.PagerAdapter;
 import com.sandstorm.softspec.punkarnban.Graphic.TapImage;
 import com.sandstorm.softspec.punkarnban.Models.Game.Game;
+import com.sandstorm.softspec.punkarnban.Models.Player.Player;
 import com.sandstorm.softspec.punkarnban.Models.Works.Homework;
 import com.sandstorm.softspec.punkarnban.Models.Works.Project;
 import com.sandstorm.softspec.punkarnban.Models.Works.Work;
@@ -71,6 +72,15 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
     private int val = 0;
 
+    /**
+     * knowledgePoint show in game
+     */
+    private TextView knowledgePoint;
+
+    /**
+     * Level present in game
+     */
+    private TextView level;
 
     /**
      * Create an activity
@@ -155,8 +165,10 @@ public class MainActivity extends AppCompatActivity implements Observer{
         healthBar.setHealthText("0/" + work.getHp());
         healthBar.setMax(work.getHp());
 
+        knowledgePoint = (TextView) findViewById(R.id.player_knowledge);
 
-
+        level = (TextView) findViewById(R.id.game_level);
+        level.setText(game.getPresentLevel()+"");
 
 
     }
@@ -192,26 +204,19 @@ public class MainActivity extends AppCompatActivity implements Observer{
         if(data.getClass() == Homework.class ) {
 
             Work work = (Work) data;
-            healthBar.setProgress(0);
-            healthBar.setHealthText("0/" + work.getHp());
-            healthBar.setNameText(work.getName());
-            healthBar.setMax(work.getHp());
+            setAllText(work);
             projectSet = false;
-            tap.setTime( "");
+            tap.setTime("");
             tap.postInvalidate();
         }
         else if(data.getClass() == Project.class) {
             Log.i("Timer", "Timing");
             Project work = (Project) data;
             if(!projectSet) {
-                healthBar.setProgress(0);
-                healthBar.setHealthText("0/" + work.getHp());
-                healthBar.setNameText(work.getName());
-                healthBar.setMax(work.getHp());
+               setAllText(work);
                 projectSet = true;
             }
             tap.setTime(work.getTime() + "");
-//            tap.invalidate();
             tap.postInvalidate();
         }
 
@@ -222,7 +227,31 @@ public class MainActivity extends AppCompatActivity implements Observer{
             healthBar.setHealthText(process + "/" + healthBar.getText().split("/")[1]);
         }
 
+        if(data.getClass() == Player.class) {
+            final Player player = (Player) data;
+            knowledgePoint.post(new Runnable() {
+                @Override
+                public void run() {
+                    knowledgePoint.setText(player.getKnowledge()+"");
+                }
+            });
+
+        }
 
 
+
+    }
+
+    private void setAllText(Work work) {
+        healthBar.setProgress(0);
+        healthBar.setHealthText("0/" + work.getHp());
+        healthBar.setNameText(work.getName());
+        healthBar.setMax(work.getHp());
+        level.post(new Runnable() {
+            @Override
+            public void run() {
+                level.setText(game.getPresentLevel()+"");
+            }
+        });
     }
 }

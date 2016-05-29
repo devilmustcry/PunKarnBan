@@ -108,7 +108,7 @@ public class Game extends Observable {
                 Log.i("Timer", "Work");
                 for (Recruit recruit : recruits) {
                     process += recruit.getDPS();
-                    checkLevelUp();
+                    instance.checkLevelUp();
                 }
 
             }
@@ -141,7 +141,7 @@ public class Game extends Observable {
      * @return last level from saved
      */
     public int getLevelFromSaved() {
-        return 9;
+        return 1;
     }
 
     /**
@@ -198,9 +198,11 @@ public class Game extends Observable {
      * Level up the stage
      */
     private void levelUp() {
+
+        player.gainKnowledge(work.getKnowledge());
+
         level++;
         work = initWork();
-
 
         process = 0;
         if(workFactory.getName().equalsIgnoreCase("project")) {
@@ -212,6 +214,9 @@ public class Game extends Observable {
 
         setChanged();
         notifyObservers(work);
+
+        setChanged();
+        notifyObservers(player);
 
     }
 
@@ -292,6 +297,10 @@ public class Game extends Observable {
         level-=10;
         levelUp();
 
+    }
+
+    public int getPresentLevel() {
+        return level;
     }
 
 }

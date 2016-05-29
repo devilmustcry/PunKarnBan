@@ -1,5 +1,7 @@
 package com.sandstorm.softspec.punkarnban.Models.Player;
 
+import android.util.Log;
+
 import com.sandstorm.softspec.punkarnban.Models.Items.Item;
 import com.sandstorm.softspec.punkarnban.Models.Weapon.Stationery;
 
@@ -17,6 +19,7 @@ public class Player {
     private int wpt;
     private List<Item> items;
     private Stationery stationery;
+    private int knowledge;
 
 
     public Player(String name) {
@@ -25,6 +28,7 @@ public class Player {
         items = new ArrayList<Item>();
         stationery = Stationery.getInstance();
         setWpt(stationery.getWPT());
+        knowledge = 0;
 
 
     }
@@ -54,6 +58,15 @@ public class Player {
 
         this.wpt = wpt;
 
+    }
+
+    public void gainKnowledge(int knowledge) {
+        Log.i("Knowledge gained : ",knowledge+"");
+        this.knowledge+=knowledge;
+    }
+
+    public int getKnowledge() {
+        return knowledge;
     }
 
 

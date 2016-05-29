@@ -31,7 +31,12 @@ public class HomeworkFactory implements WorkFactory {
     /**
      * Knowledge
      */
-    private int exp = 1;
+    private int exp = 8;
+
+    /**
+     * HP
+     */
+    private int hp = 25;
 
     /**
      * create homework
@@ -43,7 +48,7 @@ public class HomeworkFactory implements WorkFactory {
         if(index==5)
             index = 0;
         Log.i("Level when create",level+"");
-        return new Homework(workName[index++], level*20, ++gold,point,exp);
+        return new Homework(workName[index++], (int) (Math.ceil(hp*Math.pow(1.012,level))) ,(int)(Math.ceil(exp* Math.pow(1.005,level))));
     }
 
     @Override

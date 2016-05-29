@@ -10,12 +10,10 @@ public class Homework extends Work  {
      * Constructor
      * @param name
      * @param hp
-     * @param point
-     * @param gold
      * @param knowledge
      */
-    public Homework(String name,int hp, int point, int gold, int knowledge) {
-        super(name,hp, point, gold, knowledge);
+    public Homework(String name,int hp, int knowledge) {
+        super(name,hp, knowledge);
     }
 
 
@@ -23,17 +21,9 @@ public class Homework extends Work  {
      * get reward...
      * @return
      */
-    public int getPointReward() {
-        return super.getPoint();
-    }
-
 
     public int getKnowledgeReward() {
         return super.getKnowledge();
     }
 
-
-    public int getGoldReward() {
-        return super.getGold();
-    }
 }

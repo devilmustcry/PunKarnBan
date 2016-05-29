@@ -21,59 +21,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="6"
 
             >
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="7pt"
-                android:text="Point : "
-                android:layout_weight="1"
-               />
-            <TextView
-                android:id="@+id/player_point"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="7pt"
-                android:text="0"
-                android:layout_weight="1"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="7pt"
-                android:text="Gold : "
-                android:layout_weight="1"
-
-                />
-            <TextView
-                android:id="@+id/player_gold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="7pt"
-                android:text="0"
-                android:layout_weight="1"
-                />
-            <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="7pt"
                 android:text="Knowledge : "
-                android:layout_weight="1"
-                />
+               />
             <TextView
                 android:id="@+id/player_knowledge"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="7pt"
                 android:text="0"
-                android:layout_weight="1"
                 />
 
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Level : "
+                android:textSize="7pt"/>
+
+            <TextView
+                android:id="@+id/game_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="7pt"
+                android:text="0"/>
 
 
         </LinearLayout>
