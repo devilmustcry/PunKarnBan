@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.sandstorm.softspec.punkarnban.Fragments.RecruitFragment;
-import com.sandstorm.softspec.punkarnban.Fragments.ShopFragment;
+import com.sandstorm.softspec.punkarnban.Fragments.StationeryFragment;
 import com.sandstorm.softspec.punkarnban.Fragments.SkillFragment;
 
 /**
@@ -27,7 +27,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
 
             case 0 :
-                Fragment shop = new ShopFragment();
+                Fragment shop = new StationeryFragment();
                 return shop;
             case 1 :
                 Fragment recuit = new RecruitFragment();

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099cc"
-    tools:context=".Activities.MainActivity">
+    tools:context=".Activities.MainActivity"
+    >
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
@@ -64,7 +65,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <com.sandstorm.softspec.punkarnban.Graphic.HealthBar
@@ -82,33 +83,22 @@
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/relative">
 
-            <!--<ImageView-->
-                <!--android:id="@+id/tap"-->
-                <!--android:src="@drawable/tap_default"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center"-->
-                <!--android:keepScreenOn="true"-->
-                <!--/>-->
+                android:layout_height="275dp"
+                android:id="@+id/relative"
+                >
+
+
                 <com.sandstorm.softspec.punkarnban.Graphic.TapImage
                     android:id="@+id/tap"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true"
                     android:scaleType="fitXY"
-                    android:src="@drawable/tap_default" />
+                    android:src="@drawable/student1_1" />
 
-            <!--<TextView-->
-                <!--android:id="@+id/wps_tap"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentTop="true"-->
-                <!--android:layout_marginTop="40dp"-->
-                <!--android:layout_centerHorizontal="true" />-->
+
 
             </RelativeLayout>
 

@@ -15,7 +15,6 @@ public class DamagePool implements Runnable {
 
     private List<DamageText> damageTextList;
 
-
     public DamagePool() {
         this.damageTextList = new ArrayList<DamageText>();
     }
@@ -44,18 +43,22 @@ public class DamagePool implements Runnable {
                 text.active();
                 text.setY(text.getStartY());
 //                text.setVisibility(View.VISIBLE);
-                Log.i("Test","active old text");
+                Log.i("Have",getNumText()+"");
                 return;
             }
         }
 
         DamageText text = new DamageText(context);
-        text.setText(damage+"");
+        text.setText("+"+damage+" word");
         text.setTextColor(Color.RED);
-        text.setX((float) (ll.getWidth() * 0.75));
-        text.setY((float) (ll.getHeight() * 0.25));
+        text.setX((float) (ll.getWidth() * 0.55));
+        text.setY((float) (ll.getHeight() * 0.5));
         ll.addView(text);
-        text.setStartY((float)(ll.getHeight() * 0.25));
+        text.setStartY((float)(ll.getHeight() * 0.5));
         damageTextList.add(text);
+    }
+
+    private int getNumText() {
+        return damageTextList.size();
     }
 }

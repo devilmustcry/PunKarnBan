@@ -51,8 +51,8 @@ public class TapImage extends ImageView {
         textPaint.setColor(Color.RED);
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);
         textPaint.setTextSize(50);
-        int x = getWidth()/2  - bound.centerX();
-        int y = (int)(getHeight()*0.25 - bound.centerY());
+        int x = (int)(getWidth()/2.35  - bound.centerX());
+        int y = (int)(getHeight()*0.5 - bound.centerY());
         canvas.drawText(time, x, y, textPaint);
 
     }

@@ -299,4 +299,7 @@ public class Game extends Observable {
         return level;
     }
 
+    public Work getWork() {
+        return work;
+    }
 }

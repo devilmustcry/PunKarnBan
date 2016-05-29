@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -83,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements Observer{
     private TextView level;
 
     /**
+     * Layout for set background
+     */
+    private RelativeLayout background;
+
+    /**
      * Create an activity
      * @param savedInstanceState : Don't know what is it....
      */
@@ -102,12 +108,11 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
         game = Game.getInstance(); //get instance from game
         game.addObserver(this); // add this as an obsever to observe game
-
+        background = (RelativeLayout) findViewById(R.id.relative);
 
         tap = (TapImage) findViewById(R.id.tap); //get image from view
 
         final DamagePool damagePool = new DamagePool(); // damage pool (graphic reason)
-        final RelativeLayout ll = (RelativeLayout)findViewById(R.id.relative); //get relativelayout
 
 
         Thread t = new Thread(damagePool); //create a thread
@@ -119,14 +124,14 @@ public class MainActivity extends AppCompatActivity implements Observer{
             public void onClick(View v) {
                 changeImage();//change image when tap
                 int damage = game.tap();//invoke game tap and return the damage
-                damagePool.addPool(getApplicationContext(),ll,damage);//add into damagePool
+                damagePool.addPool(getApplicationContext(),background,damage);//add into damagePool
 
             }
         });
 
         //Initialize upgradeTab
         upgradeTab = (TabLayout) findViewById(R.id.upgrade_layout);
-        upgradeTab.addTab(upgradeTab.newTab().setText("Shop"));
+        upgradeTab.addTab(upgradeTab.newTab().setText("Stationery"));
         upgradeTab.addTab(upgradeTab.newTab().setText("Recruit"));
         upgradeTab.addTab(upgradeTab.newTab().setText("Skill"));
         upgradeTab.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -160,16 +165,52 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
         //Find Healthbar from view
         healthBar = (HealthBar) findViewById(R.id.work_health_bar);
-        Work work = game.initWork();
-        healthBar.setNameText(work.getName());
-        healthBar.setHealthText("0/" + work.getHp());
-        healthBar.setMax(work.getHp());
+        game.initWork();
+        healthBar.setNameText(game.getWork().getName());
+        healthBar.setHealthText("0/" + game.getWork().getHp());
+        healthBar.setMax(game.getWork().getHp());
 
         knowledgePoint = (TextView) findViewById(R.id.player_knowledge);
 
         level = (TextView) findViewById(R.id.game_level);
-        level.setText(game.getPresentLevel()+"");
+        level.setText(game.getPresentLevel() + "");
 
+
+        setBackground();
+
+    }
+
+    private void setBackground() {
+
+       final int resource = 0;
+
+
+        background.post(new Runnable() {
+            @Override
+            public void run() {
+
+                int resource = 0;
+                switch (game.getWork().getName()) {
+                    case "Mathematics":
+                        resource = R.drawable.math_bg;
+                        break;
+                    case "Chemistry":
+                        resource = R.drawable.chem_bg;
+                        break;
+                    case "Physic":
+                        resource = R.drawable.phy_bg;
+                        break;
+                    case "English":
+                        resource = R.drawable.english_bg;
+                        break;
+                    case "Biology":
+                        resource = R.drawable.bio_bg;
+
+                }
+                background.setBackground(getDrawable(resource));
+
+            }
+        });
 
     }
 
@@ -179,11 +220,11 @@ public class MainActivity extends AppCompatActivity implements Observer{
     private void changeImage() {
 
         if (val % 2 == 0) {
-            tap.setImageResource(R.drawable.tap_tapping);
+            tap.setImageResource(R.drawable.student1_1);
             val = 1;
 
         } else {
-            tap.setImageResource(R.drawable.tap_default);
+            tap.setImageResource(R.drawable.student1_2);
             val = 2;
         }
 
@@ -208,13 +249,16 @@ public class MainActivity extends AppCompatActivity implements Observer{
             projectSet = false;
             tap.setTime("");
             tap.postInvalidate();
+            setBackground();
         }
         else if(data.getClass() == Project.class) {
             Log.i("Timer", "Timing");
             Project work = (Project) data;
             if(!projectSet) {
-               setAllText(work);
+                setAllText(work);
+                setBackground();
                 projectSet = true;
+
             }
             tap.setTime(work.getTime() + "");
             tap.postInvalidate();

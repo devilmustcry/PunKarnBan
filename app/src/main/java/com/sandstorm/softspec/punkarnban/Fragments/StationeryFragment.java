@@ -15,7 +15,7 @@ import com.sandstorm.softspec.punkarnban.R;
 /**
  * Created by FTTX on 5/21/2016 AD.
  */
-public class ShopFragment extends Fragment {
+public class StationeryFragment extends Fragment {
 
 
     @Override
