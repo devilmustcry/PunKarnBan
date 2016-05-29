@@ -18,8 +18,8 @@ public class Stationery {
 
     private Stationery(){
         level = 1;
-        wpt =  1;
-        price = 5;
+        wpt =  15;
+        price = 300;
     }
 
     public static Stationery getInstance(){
@@ -43,17 +43,17 @@ public class Stationery {
 
     public void levelUp(){
         level++;
-        price = (int)Math.ceil(price * 1.02);
-        wpt = (int)Math.ceil(5 * Math.pow(1.01 , level));
+        price = (int)Math.ceil(300 * Math.pow(1.15 , level));
+        wpt = (int)Math.ceil(15 * Math.pow(1.01 , level));
     }
 
 
     public String getFullName(){
-        return getName(level) + " lv." + level%100;
+        return getName(level) + " lv." + level%10;
     }
 
     private String getName(int level){
-        return names[((int) Math.floor(level / 100.0))];
+        return names[((int) Math.floor(level / 10.0))];
 
     }
 
