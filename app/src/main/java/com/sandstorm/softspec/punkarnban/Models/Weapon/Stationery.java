@@ -19,8 +19,8 @@ public class Stationery {
             "The greatest ever made pencil" , "Pen"};
 
     public Stationery(){
-        level = 80;
-        wpt =  15;
+        level = 1;
+        wpt =  1000000;
         price = 300;
     }
 

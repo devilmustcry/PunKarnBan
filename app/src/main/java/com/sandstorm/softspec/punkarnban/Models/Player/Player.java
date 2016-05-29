@@ -46,8 +46,10 @@ public class Player {
 
 
     public void levelUpStationary() {
+        knowledge-=stationery.getPrice();
         stationery.levelUp();
         setWpt(stationery.getWPT());
+
     }
 
     public int tap() {

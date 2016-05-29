@@ -28,8 +28,14 @@ public class DamagePool implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            for (DamageText text : damageTextList) {
+            for (final DamageText text : damageTextList) {
                 if (text.isActive()) {
+//                    text.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            text.move();
+//                        }
+//                    });
                     text.move();
                 }
 
@@ -41,6 +47,7 @@ public class DamagePool implements Runnable {
         for(DamageText text : damageTextList) {
             if(!text.isActive()){
                 text.active();
+                text.setText("+"+damage+" word");
                 text.setY(text.getStartY());
 //                text.setVisibility(View.VISIBLE);
                 Log.i("Have",getNumText()+"");

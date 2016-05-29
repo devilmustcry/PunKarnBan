@@ -7,4 +7,5 @@ public interface TapState {
 
     public void tap();
 
+    public void upgrade();
 }

@@ -135,7 +135,7 @@ public class Game extends Observable {
      * @return last level from saved
      */
     public int getLevelFromSaved() {
-        return 1;
+        return 999;
     }
 
     /**
@@ -289,5 +289,12 @@ public class Game extends Observable {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public void levelUpStationary() {
+        if(player.getKnowledge()>=player.getStationery().getPrice())
+            player.levelUpStationary();
+        setChanged();
+        notifyObservers(player);
     }
 }

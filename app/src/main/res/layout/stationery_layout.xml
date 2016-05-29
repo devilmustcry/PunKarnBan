@@ -29,12 +29,22 @@
         android:layout_below="@+id/stationery_image"
         android:layout_alignParentStart="true" />
 
+    <TextView
+        android:text="Price"
+        android:id="@+id/stationery_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="8pt"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/stationery_name"
+        android:layout_alignParentStart="true" />
+
     <Button
         android:text="Upgrade"
         android:id="@+id/stationery_upgrade"
         android:layout_width="206dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/stationery_name"
+        android:layout_below="@+id/stationery_price"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

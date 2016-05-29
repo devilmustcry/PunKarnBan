@@ -23,6 +23,7 @@ import com.sandstorm.softspec.punkarnban.Graphic.DamagePool;
 import com.sandstorm.softspec.punkarnban.Graphic.HealthBar;
 import com.sandstorm.softspec.punkarnban.State.DefualtState;
 import com.sandstorm.softspec.punkarnban.State.TapState;
+import com.sandstorm.softspec.punkarnban.Utility.DecimalConverter;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -274,7 +275,8 @@ public class MainActivity extends AppCompatActivity implements Observer{
             knowledgePoint.post(new Runnable() {
                 @Override
                 public void run() {
-                    knowledgePoint.setText(player.getKnowledge()+"");
+                    DecimalConverter converter = new DecimalConverter(player.getKnowledge());
+                    knowledgePoint.setText(converter.convert());
                 }
             });
 
@@ -283,6 +285,8 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
 
     }
+
+
 
     private void setAllText(Work work) {
         healthBar.setProgress(0);

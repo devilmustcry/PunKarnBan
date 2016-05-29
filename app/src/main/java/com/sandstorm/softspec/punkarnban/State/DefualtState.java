@@ -14,18 +14,26 @@ public class DefualtState implements TapState {
 
     ImageView image;
     MainActivity activity;
+    Stationery stationery;
+
 
     public DefualtState(MainActivity activity,ImageView image) {
         this.image = image;
         this.activity = activity;
+        stationery = Game.getInstance().getPlayer().getStationery();
     }
 
     @Override
     public void tap() {
-        Stationery stationery = Game.getInstance().getPlayer().getStationery();
         int resource = getImage(stationery.getName(stationery.getLevel()));
         image.setImageResource(resource);
         activity.setState(new TappingState(activity,image));
+    }
+
+    @Override
+    public void upgrade() {
+        int resource = getImage(stationery.getName(stationery.getLevel()));
+        image.setImageResource(resource);
     }
 
     private int getImage(String name) {

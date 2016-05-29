@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.sandstorm.softspec.punkarnban.Models.Game.Game;
 import com.sandstorm.softspec.punkarnban.Models.Weapon.Stationery;
 import com.sandstorm.softspec.punkarnban.R;
+import com.sandstorm.softspec.punkarnban.Utility.DecimalConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,12 @@ public class StationeryFragment extends Fragment {
 
     private TextView stationeryName;
 
+    private TextView price;
+
     private Button stationeryUpgrade;
+
+
+
     private View v;
 
 
@@ -40,7 +46,7 @@ public class StationeryFragment extends Fragment {
 
     private void setContentView() {
 
-        Stationery stationery = Game.getInstance().getPlayer().getStationery();
+        final Stationery stationery = Game.getInstance().getPlayer().getStationery();
         stationeryImage = (ImageView) v.findViewById(R.id.stationery_image);
         int resource = getImage(stationery.getName(stationery.getLevel()));
         stationeryImage.setImageResource(resource);
@@ -48,16 +54,23 @@ public class StationeryFragment extends Fragment {
         stationeryName = (TextView) v.findViewById(R.id.stationery_name);
         stationeryName.setText(stationery.getFullName());
 
+        price = (TextView) v.findViewById(R.id.stationery_price);
+
+        price.setText(new DecimalConverter(stationery.getPrice()).convert());
+
         stationeryUpgrade = (Button) v.findViewById(R.id.stationery_upgrade);
         stationeryUpgrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Game.getInstance().getPlayer().levelUpStationary();
+                Game.getInstance().levelUpStationary();
                 setContentView();
+
+
             }
         });
 
     }
+
 
     private int getImage(String name) {
 
