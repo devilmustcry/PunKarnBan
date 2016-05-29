@@ -26,7 +26,7 @@ public class Player {
         this.name = name;
 
         items = new ArrayList<Item>();
-        stationery = Stationery.getInstance();
+        stationery = new Stationery();
         setWpt(stationery.getWPT());
         knowledge = 0;
 
@@ -67,6 +67,10 @@ public class Player {
 
     public int getKnowledge() {
         return knowledge;
+    }
+
+    public Stationery getStationery() {
+        return stationery;
     }
 
 

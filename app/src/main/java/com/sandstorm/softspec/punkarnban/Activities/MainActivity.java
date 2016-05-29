@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ import com.sandstorm.softspec.punkarnban.Models.Works.Work;
 import com.sandstorm.softspec.punkarnban.R;
 import com.sandstorm.softspec.punkarnban.Graphic.DamagePool;
 import com.sandstorm.softspec.punkarnban.Graphic.HealthBar;
+import com.sandstorm.softspec.punkarnban.State.DefualtState;
+import com.sandstorm.softspec.punkarnban.State.TapState;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -89,6 +92,10 @@ public class MainActivity extends AppCompatActivity implements Observer{
     private RelativeLayout background;
 
     /**
+     * State of tap image
+     */
+    private TapState state;
+    /**
      * Create an activity
      * @param savedInstanceState : Don't know what is it....
      */
@@ -111,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements Observer{
         background = (RelativeLayout) findViewById(R.id.relative);
 
         tap = (TapImage) findViewById(R.id.tap); //get image from view
+
+        state = new DefualtState(this,tap);
 
         final DamagePool damagePool = new DamagePool(); // damage pool (graphic reason)
 
@@ -182,8 +191,6 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
     private void setBackground() {
 
-       final int resource = 0;
-
 
         background.post(new Runnable() {
             @Override
@@ -218,16 +225,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
      * Change image method
      */
     private void changeImage() {
-
-        if (val % 2 == 0) {
-            tap.setImageResource(R.drawable.student1_1);
-            val = 1;
-
-        } else {
-            tap.setImageResource(R.drawable.student1_2);
-            val = 2;
-        }
-
+        state.tap();
     }
 
 
@@ -297,5 +295,17 @@ public class MainActivity extends AppCompatActivity implements Observer{
                 level.setText(game.getPresentLevel()+"");
             }
         });
+    }
+
+    public void setState(TapState state) {
+        this.state = state;
+    }
+
+    public MainActivity getActivity() {
+        return this;
+    }
+
+    public ImageView getTapImage() {
+        return tap;
     }
 }

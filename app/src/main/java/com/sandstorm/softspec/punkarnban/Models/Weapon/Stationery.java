@@ -1,5 +1,7 @@
 package com.sandstorm.softspec.punkarnban.Models.Weapon;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import java.util.List;
  * Created by FTTX on 5/7/2016 AD.
  */
 public class Stationery {
-    private static Stationery instance;
+//    private static Stationery instance;
     private int level;
     private int wpt;
     private int price;
@@ -16,18 +18,18 @@ public class Stationery {
             "Embedded Computer pencil" , "Heavenly pencil" , "Mjolnir's pencil" ,
             "The greatest ever made pencil" , "Pen"};
 
-    private Stationery(){
-        level = 1;
+    public Stationery(){
+        level = 80;
         wpt =  15;
         price = 300;
     }
 
-    public static Stationery getInstance(){
-        if(instance == null){
-            instance = new Stationery();
-        }
-        return instance;
-    }
+//    public static Stationery getInstance(){
+//        if(instance == null){
+//            instance = new Stationery();
+//        }
+//        return instance;
+//    }
 
     public int getLevel(){
         return level;
@@ -49,13 +51,22 @@ public class Stationery {
 
 
     public String getFullName(){
-        return getName(level) + " lv." + level%10;
+        Log.i("Level",level+"");
+        String levelShow = level%10+"";
+        if(level>=90)
+            levelShow = (level-90) +"";
+        return getName(level) + " lv." + levelShow;
     }
 
-    private String getName(int level){
+    public String getName(int level){
+
+        if(level>=90)
+            return names[9];
         return names[((int) Math.floor(level / 10.0))];
 
     }
+
+
 
 
 }

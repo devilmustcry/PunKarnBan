@@ -59,8 +59,6 @@ public class TapImage extends ImageView {
 
     public void setTime(String time) {
         this.time = time;
-//        invalidate();
-//        refreshDrawableState();
-//        drawableStateChanged();
+
     }
 }

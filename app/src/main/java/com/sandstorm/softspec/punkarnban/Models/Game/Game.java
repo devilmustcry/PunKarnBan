@@ -3,6 +3,7 @@ package com.sandstorm.softspec.punkarnban.Models.Game;
 import android.util.Log;
 
 import com.sandstorm.softspec.punkarnban.Models.Player.Player;
+import com.sandstorm.softspec.punkarnban.Models.Recruit.Friend;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.Recruit;
 import com.sandstorm.softspec.punkarnban.Models.Works.HomeworkFactory;
 import com.sandstorm.softspec.punkarnban.Models.Works.Project;
@@ -10,6 +11,7 @@ import com.sandstorm.softspec.punkarnban.Models.Works.ProjectFactory;
 import com.sandstorm.softspec.punkarnban.Models.Works.Work;
 import com.sandstorm.softspec.punkarnban.Models.Works.WorkFactory;
 
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -42,10 +44,6 @@ public class Game extends Observable {
      * List of recruit in this game
      */
     private List<Recruit> recruits;
-    /**
-     * Recruit Factory (will remove later)
-     */
-    private RecruitFactory recruitFactory;
     /**
      * Work Factory
      */
@@ -181,8 +179,7 @@ public class Game extends Observable {
      * @param name of the factory
      */
     public void hire(String name) {
-        recruitFactory = getFactory(name);
-        recruits.add(recruitFactory.create());
+        recruits.add(new Friend());
         if(recruitTimer == null) {
             recruitTimer = new Timer();
             startRecruitTimer();
@@ -217,19 +214,6 @@ public class Game extends Observable {
     }
 
 
-    /**
-     * Get Recruit factory (Will remove)
-     * @param name
-     * @return
-     */
-    public RecruitFactory getFactory(String name){
-        if(name.equalsIgnoreCase("jittat")){
-            return new TeacherFactory();
-        } else if(name.equalsIgnoreCase("frank")){
-            return new FriendFactory();
-        }
-        return null;
-    }
 
     /**
      * Get work factory
@@ -301,5 +285,9 @@ public class Game extends Observable {
 
     public Work getWork() {
         return work;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
