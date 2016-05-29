@@ -15,14 +15,14 @@ public class Chemistry implements Skill{
         name = "Chemistry";
         level = 0;
         priceOfNextLevel = 20;
-        skill_wpt = 1;
+        skill_wpt = 2;
     }
 
 
     public void levelUp(){
         level++;
         priceOfNextLevel = (int)Math.ceil(20 * Math.pow(1.01 , level));
-        skill_wpt +=  (int)Math.ceil(Math.pow(1.01 , level));
+        skill_wpt +=  (int)Math.ceil(2 * Math.pow(1.01 , level));
     }
 
     public String getName(){

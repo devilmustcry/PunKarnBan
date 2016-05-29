@@ -9,19 +9,16 @@ import java.util.List;
 public class Stationery {
     private static Stationery instance;
     private int level;
-
-
-
     private int wpt;
-    private double price;
+    private int price;
 
-    private final String [] names  = {"Rusty pencil", "Standard pencil" , "Silver pencil" , "Platinum pencil" , "Chairman pencil",
-            "Embedded Computer pencil" , "Quantum Computer pencil" , "Heavenly Being pencil" ,
+    private final String [] names  = {"Rusty pencil", "Standard pencil" , "Silver pencil" , "Gold pencil" , "Diamond pencil",
+            "Embedded Computer pencil" , "Heavenly pencil" , "Mjolnir's pencil" ,
             "The greatest ever made pencil" , "Pen"};
 
     private Stationery(){
         level = 1;
-        wpt = 100;
+        wpt =  1;
         price = 5;
     }
 
@@ -45,13 +42,14 @@ public class Stationery {
     }
 
     public void levelUp(){
-        level = level++;
-        price = price * 1.02;
+        level++;
+        price = (int)Math.ceil(price * 1.02);
+        wpt = (int)Math.ceil(5 * Math.pow(1.01 , level));
     }
 
 
     public String getFullName(){
-        return getName(level) + " lv." + level;
+        return getName(level) + " lv." + level%100;
     }
 
     private String getName(int level){
