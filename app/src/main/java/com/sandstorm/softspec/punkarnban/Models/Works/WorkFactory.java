@@ -15,7 +15,7 @@ public abstract class WorkFactory {
     /**
      * Array for get name
      */
-    final private String [] workName = {"Mathematics","Physic","English","Chemistry","Biology"};
+    final private String [] workName = {"Mathematics","Physics","English","Chemistry","Biology"};
 
 
     public abstract Work create(int level);

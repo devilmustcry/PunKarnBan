@@ -161,7 +161,9 @@ public class Game extends Observable {
             workFactory = getWorkFactory("project");
         else
             workFactory = getWorkFactory("homework");
-        return workFactory.create(level);
+        Work work = workFactory.create(level);
+        player.setSkill(work.getName());
+        return work;
     }
 
     /**
@@ -229,7 +231,7 @@ public class Game extends Observable {
             else
                 i++;
         }
-        Log.i("Get recruit index",i+"");
+        Log.i("Get recruit index", i + "");
         return -1;
 
     }
@@ -345,5 +347,9 @@ public class Game extends Observable {
 
     public List<Recruit> getRecruits() {
         return recruits;
+    }
+
+    public void levelUpSkill(String name) {
+        player.getSkillManager().levelUp(name);
     }
 }

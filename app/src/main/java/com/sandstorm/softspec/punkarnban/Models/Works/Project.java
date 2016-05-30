@@ -18,8 +18,6 @@ public class Project extends Work {
      * Constructor....
      * @param name
      * @param hp
-     * @param point
-     * @param gold
      * @param knowledge
      * @param time
      */

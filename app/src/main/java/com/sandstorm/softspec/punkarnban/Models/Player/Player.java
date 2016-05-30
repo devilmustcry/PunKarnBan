@@ -3,6 +3,8 @@ package com.sandstorm.softspec.punkarnban.Models.Player;
 import android.util.Log;
 
 import com.sandstorm.softspec.punkarnban.Models.Items.Item;
+import com.sandstorm.softspec.punkarnban.Models.Skill.Skill;
+import com.sandstorm.softspec.punkarnban.Models.Skill.SkillManager;
 import com.sandstorm.softspec.punkarnban.Models.Weapon.Stationery;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class Player {
     private List<Item> items;
     private Stationery stationery;
     private int knowledge;
+    private SkillManager skillManager;
 
 
 
@@ -28,8 +31,10 @@ public class Player {
 
         items = new ArrayList<Item>();
         stationery = new Stationery();
+        skillManager = new SkillManager();
         setWpt(stationery.getWPT());
         knowledge = 0;
+
 
 
     }
@@ -54,8 +59,10 @@ public class Player {
     }
 
     public int tap() {
-        return wpt;
+        return wpt+skillManager.getWptFromSkill();
     }
+
+
 
     public void setWpt(int wpt) {
 
@@ -78,6 +85,14 @@ public class Player {
 
     public void decreaseKnowledge(int knowledge) {
         this.knowledge-=knowledge;
+    }
+
+    public SkillManager getSkillManager(){
+        return this.skillManager;
+    }
+
+    public void setSkill(String name) {
+        skillManager.setSkillStrategy(name);
     }
 
 

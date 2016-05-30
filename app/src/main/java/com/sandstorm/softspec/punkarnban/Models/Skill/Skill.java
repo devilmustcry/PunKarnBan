@@ -7,6 +7,7 @@ public interface Skill{
 
     public int getApplySkillWPT();
     public void levelUp();
-
+    public String getName();
+    public int getPriceOfNextLevel();
 
 }

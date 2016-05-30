@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
                     case "Chemistry":
                         resource = R.drawable.chem_bg;
                         break;
-                    case "Physic":
+                    case "Physics":
                         resource = R.drawable.phy_bg;
                         break;
                     case "English":
