@@ -20,8 +20,8 @@ public class Stationery {
 
     public Stationery(){
         level = 1;
-        wpt =  1000000;
-        price = 300;
+        wpt =  15;
+        price = 100;
     }
 
 //    public static Stationery getInstance(){
@@ -45,7 +45,7 @@ public class Stationery {
 
     public void levelUp(){
         level++;
-        price = (int)Math.ceil(300 * Math.pow(1.15 , level));
+        price = (int)Math.ceil(100 * Math.pow(1.15 , level));
         wpt = (int)Math.ceil(15 * Math.pow(1.01 , level));
     }
 

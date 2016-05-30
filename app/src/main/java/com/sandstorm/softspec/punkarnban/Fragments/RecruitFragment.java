@@ -1,17 +1,16 @@
 package com.sandstorm.softspec.punkarnban.Fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.sandstorm.softspec.punkarnban.Adapters.RecruitAdapter;
-import com.sandstorm.softspec.punkarnban.Models.Recruit.Friend;
+import com.sandstorm.softspec.punkarnban.Models.Game.Game;
+import com.sandstorm.softspec.punkarnban.Models.Recruit.Nerd;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.Recruit;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.Teacher;
 import com.sandstorm.softspec.punkarnban.R;
@@ -50,9 +49,17 @@ public class RecruitFragment extends Fragment {
     }
 
     private void setList() {
+//        Log.i("Setting","Set list in recruit");
+//        recruits.clear();
+//        recruits = Game.getInstance().getRecruits();
+//        for(Recruit recruit : recruits) {
+//            Log.i("Recruit",recruit.getName());
+//        }
+//        recruitAdapter.notifyDataSetChanged();
         recruits.clear();
-        recruits.add(new Friend());
-        recruits.add(new Teacher());
+        for(Recruit recruit : Game.getInstance().getRecruits()) {
+            recruits.add(recruit);
+        }
         recruitAdapter.notifyDataSetChanged();
 
     }

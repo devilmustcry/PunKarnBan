@@ -65,7 +65,6 @@ public class StationeryFragment extends Fragment {
                 Game.getInstance().levelUpStationary();
                 setContentView();
 
-
             }
         });
 

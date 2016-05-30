@@ -22,6 +22,7 @@ public class Player {
     private int knowledge;
 
 
+
     public Player(String name) {
         this.name = name;
 
@@ -75,7 +76,9 @@ public class Player {
         return stationery;
     }
 
-
+    public void decreaseKnowledge(int knowledge) {
+        this.knowledge-=knowledge;
+    }
 
 
 

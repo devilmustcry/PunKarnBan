@@ -1,13 +1,13 @@
 package com.sandstorm.softspec.punkarnban.Models.Recruit;
 
 /**
- * Created by Warata on 5/27/16 AD.
+ * Created by FTTX on 5/30/2016 AD.
  */
-public class Teacher extends Recruit {
+public class Senior extends Recruit {
 
-    public Teacher() {
-        super("Teacher", 5);
-    }
+
+
+    public Senior() { super("Senior", 3); }
 
     @Override
     public void levelUp() {

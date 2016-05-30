@@ -37,14 +37,26 @@ public class RecruitAdapter extends ArrayAdapter<Recruit> {
         final Recruit recruit = getItem(position);
 
         TextView name = (TextView) v.findViewById(R.id.recruit_name);
-        name.setText(recruit.getName());
+        name.setText(recruit.getFullName());
 
-        Button hire = (Button) v.findViewById(R.id.recruit_hire);
-        hire.setOnClickListener(new View.OnClickListener() {
+        TextView price = (TextView) v.findViewById(R.id.recruit_price);
+        price.setText(recruit.getPrice()+"");
+
+        Button levelUp = (Button) v.findViewById(R.id.recruit_hire);
+
+        if(recruit.getLevel()==0) {
+            levelUp.setText("Hire");
+        }
+        else {
+            levelUp.setText("Level Up");
+        }
+
+
+        levelUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Game.getInstance().hire(recruit.getName());
-                Log.i("Hiring",recruit.getName());
+                Game.getInstance().levelUpRecruit(recruit.getName());
+                notifyDataSetInvalidated();
             }
         });
 

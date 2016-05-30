@@ -3,15 +3,18 @@ package com.sandstorm.softspec.punkarnban.Models.Game;
 import android.util.Log;
 
 import com.sandstorm.softspec.punkarnban.Models.Player.Player;
-import com.sandstorm.softspec.punkarnban.Models.Recruit.Friend;
+import com.sandstorm.softspec.punkarnban.Models.Recruit.Chancellor;
+import com.sandstorm.softspec.punkarnban.Models.Recruit.Dean;
+import com.sandstorm.softspec.punkarnban.Models.Recruit.Nerd;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.Recruit;
+import com.sandstorm.softspec.punkarnban.Models.Recruit.Senior;
+import com.sandstorm.softspec.punkarnban.Models.Recruit.Teacher;
 import com.sandstorm.softspec.punkarnban.Models.Works.HomeworkFactory;
 import com.sandstorm.softspec.punkarnban.Models.Works.Project;
 import com.sandstorm.softspec.punkarnban.Models.Works.ProjectFactory;
 import com.sandstorm.softspec.punkarnban.Models.Works.Work;
 import com.sandstorm.softspec.punkarnban.Models.Works.WorkFactory;
 
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -80,6 +83,16 @@ public class Game extends Observable {
         work = initWork();
         process = 0;
         recruits = new ArrayList<Recruit>();
+        setDefaultRecruit();
+
+    }
+
+    private void setDefaultRecruit() {
+        recruits.add(new Nerd());
+        recruits.add(new Senior());
+        recruits.add(new Teacher());
+        recruits.add(new Dean());
+        recruits.add(new Chancellor());
 
     }
 
@@ -101,7 +114,8 @@ public class Game extends Observable {
             public void run() {
                 Log.i("Timer", "Work");
                 for (Recruit recruit : recruits) {
-                    process += recruit.getDPS();
+                    if(recruit.isHire())
+                        process += recruit.getDPS();
                     instance.checkLevelUp();
                 }
 
@@ -135,7 +149,7 @@ public class Game extends Observable {
      * @return last level from saved
      */
     public int getLevelFromSaved() {
-        return 999;
+        return 1;
     }
 
     /**
@@ -161,6 +175,10 @@ public class Game extends Observable {
         return tap;
     }
 
+    /**
+     * Check whether Level is done or not
+     */
+
     private void checkLevelUp(){
         if(isDone()) {
             if(work.getClass() == Project.class){
@@ -175,15 +193,44 @@ public class Game extends Observable {
     }
 
     /**
-     * Hire a recruit
-     * @param name of the factory
+     * Level Up a recruit
+     * @param name of the recruit that will be LevelUp
      */
-    public void hire(String name) {
-        recruits.add(new Friend());
-        if(recruitTimer == null) {
-            recruitTimer = new Timer();
-            startRecruitTimer();
+    public void levelUpRecruit(String name) {
+
+        int index = findRecruit(name);
+
+        if(player.getKnowledge()>=recruits.get(index).getPrice()) {
+            if(!recruits.get(index).isHire()) {
+                recruits.get(index).hire();
+            }
+            player.decreaseKnowledge(recruits.get(index).getPrice());
+            recruits.get(index).levelUp();
+
+            setChanged();
+            notifyObservers(player);
+
+            if(recruitTimer == null) {
+                recruitTimer = new Timer();
+                startRecruitTimer();
+            }
+
+
         }
+
+
+    }
+
+    private int findRecruit(String name) {
+        int i = 0;
+        for(Recruit recruit : recruits) {
+            if(recruit.getName().equalsIgnoreCase(name))
+                return i;
+            else
+                i++;
+        }
+        Log.i("Get recruit index",i+"");
+        return -1;
 
     }
 
@@ -243,8 +290,6 @@ public class Game extends Observable {
      * @return
      */
     private boolean isDone() {
-        Log.i("Process",process+"");
-        Log.i("HP",work.getHp()+"");
         if(process >= work.getHp()) {
             return true;
         }
@@ -296,5 +341,9 @@ public class Game extends Observable {
             player.levelUpStationary();
         setChanged();
         notifyObservers(player);
+    }
+
+    public List<Recruit> getRecruits() {
+        return recruits;
     }
 }

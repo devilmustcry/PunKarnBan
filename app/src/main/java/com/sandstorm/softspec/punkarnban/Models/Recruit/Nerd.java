@@ -3,10 +3,13 @@ package com.sandstorm.softspec.punkarnban.Models.Recruit;
 /**
  * Created by Warata on 5/27/16 AD.
  */
-public class Teacher extends Recruit {
+public class Nerd extends Recruit {
 
-    public Teacher() {
-        super("Teacher", 5);
+
+
+    // init friend name Frank with DPS 10.
+    public Nerd() {
+        super("Nerd", 1);
     }
 
     @Override
