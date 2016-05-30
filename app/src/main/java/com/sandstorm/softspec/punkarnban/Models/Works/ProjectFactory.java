@@ -1,6 +1,7 @@
 package com.sandstorm.softspec.punkarnban.Models.Works;
 
 import com.sandstorm.softspec.punkarnban.Models.Skill.*;
+import com.sandstorm.softspec.punkarnban.Utility.FormulaCalculator;
 
 import java.lang.Math;
 
@@ -11,15 +12,7 @@ import java.lang.Math;
 public class ProjectFactory extends WorkFactory {
 
 
-    /**
-     * gold for this project
-     */
-    private int gold = 100;
 
-    /**
-     * point for this project
-     */
-    private int point = 100;
 
     /**
      * knowledge for this project
@@ -31,6 +24,8 @@ public class ProjectFactory extends WorkFactory {
      */
     private int time = 60;
 
+    private int hp = 25;
+
 
     /**
      *
@@ -40,7 +35,8 @@ public class ProjectFactory extends WorkFactory {
     @Override
     public Work create(int level) {
 
-        return new Project(getWorkName()[ (int) Math.round(Math.random()*4)], level*100,exp,time);
+        return new Project(getWorkName()[ (int) Math.round(Math.random()*4)], FormulaCalculator.getInstance().calculate(hp,1.05,level)*10
+                ,FormulaCalculator.getInstance().calculate(exp,1.015,level)*3,time);
 
     }
 

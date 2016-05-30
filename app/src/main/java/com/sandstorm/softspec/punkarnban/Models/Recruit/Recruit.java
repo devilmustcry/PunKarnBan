@@ -11,10 +11,10 @@ public abstract class Recruit {
     private int level;
     private boolean isHire;
 
-    public Recruit(String name, int DPS){
+    public Recruit(String name, int DPS,int price){
         this.name = name;
         this.DPS = DPS;
-        price = 10;
+        this.price = price;
         level = 0;
         isHire = false;
     }
@@ -79,5 +79,9 @@ public abstract class Recruit {
 
     public boolean isHire() {
         return isHire;
+    }
+
+    public void plusLevel() {
+        level++;
     }
 }

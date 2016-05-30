@@ -1,5 +1,7 @@
 package com.sandstorm.softspec.punkarnban.Models.Works;
 
+import com.sandstorm.softspec.punkarnban.Utility.FormulaCalculator;
+
 /**
  * Factory that create work (Hell Factory!!!)
  * Created by FTTX on 5/28/2016 AD.

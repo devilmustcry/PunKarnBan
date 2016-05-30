@@ -2,6 +2,8 @@ package com.sandstorm.softspec.punkarnban.Models.Works;
 
 import android.util.Log;
 
+import com.sandstorm.softspec.punkarnban.Utility.FormulaCalculator;
+
 /**
  * Homework Factory
  * Created by FTTX on 5/28/2016 AD.
@@ -15,19 +17,9 @@ public class HomeworkFactory extends WorkFactory {
     private int index = 0;
 
     /**
-     * gold
-     */
-    private int gold = 10;
-
-    /**
-     * point
-     */
-    private int point = 10;
-
-    /**
      * Knowledge
      */
-    private int exp = 8;
+    private int exp = 16;
 
     /**
      * HP
@@ -43,8 +35,11 @@ public class HomeworkFactory extends WorkFactory {
     public Work create(int level) {
         if(index==5)
             index = 0;
-        Log.i("Level when create",level+"");
-        return new Homework(getWorkName()[index++], (int) (Math.ceil(hp*Math.pow(1.012,level))) ,(int)(Math.ceil(exp* Math.pow(1.005,level))));
+        return new Homework(getWorkName()[index++],calculate(hp,1.05,level),calculate(exp,1.015,level));
+    }
+
+    public int calculate(int a1,double ratio,int level) {
+       return FormulaCalculator.getInstance().calculate(a1,ratio,level);
     }
 
     @Override

@@ -112,7 +112,6 @@ public class Game extends Observable {
         recruitTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Log.i("Timer", "Work");
                 for (Recruit recruit : recruits) {
                     if(recruit.isHire())
                         process += recruit.getDPS();
@@ -139,7 +138,6 @@ public class Game extends Observable {
         projectTimer.cancel();
 //        projectTimer.purge();
         projectTimer = new Timer();
-        Log.e("stop", "call");
     }
 
 
@@ -231,7 +229,6 @@ public class Game extends Observable {
             else
                 i++;
         }
-        Log.i("Get recruit index", i + "");
         return -1;
 
     }
@@ -350,6 +347,11 @@ public class Game extends Observable {
     }
 
     public void levelUpSkill(String name) {
-        player.getSkillManager().levelUp(name);
+        if(player.getKnowledge() >= player.getSkillManager().findSkill(name).getPriceOfNextLevel()) {
+            player.decreaseKnowledge(player.getSkillManager().findSkill(name).getPriceOfNextLevel());
+            player.getSkillManager().levelUp(name);
+            setChanged();
+            notifyObservers(player);
+        }
     }
 }

@@ -251,7 +251,6 @@ public class MainActivity extends AppCompatActivity implements Observer{
             setBackground();
         }
         else if(data.getClass() == Project.class) {
-            Log.i("Timer", "Timing");
             Project work = (Project) data;
             if(!projectSet) {
                 setAllText(work);

@@ -71,7 +71,6 @@ public class Player {
     }
 
     public void gainKnowledge(int knowledge) {
-        Log.i("Knowledge gained : ",knowledge+"");
         this.knowledge+=knowledge;
     }
 

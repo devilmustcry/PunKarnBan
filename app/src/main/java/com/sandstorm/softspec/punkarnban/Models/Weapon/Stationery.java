@@ -2,6 +2,8 @@ package com.sandstorm.softspec.punkarnban.Models.Weapon;
 
 import android.util.Log;
 
+import com.sandstorm.softspec.punkarnban.Utility.FormulaCalculator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class Stationery {
 
     public Stationery(){
         level = 1;
-        wpt =  15;
+        wpt =  3;
         price = 100;
     }
 
@@ -45,13 +47,12 @@ public class Stationery {
 
     public void levelUp(){
         level++;
-        price = (int)Math.ceil(100 * Math.pow(1.15 , level));
-        wpt = (int)Math.ceil(15 * Math.pow(1.01 , level));
+        price = FormulaCalculator.getInstance().calculate(100,1.15,level);
+        wpt = FormulaCalculator.getInstance().calculate(3,1.1,level);
     }
 
 
     public String getFullName(){
-        Log.i("Level",level+"");
         String levelShow = level%10+"";
         if(level>=90)
             levelShow = (level-90) +"";

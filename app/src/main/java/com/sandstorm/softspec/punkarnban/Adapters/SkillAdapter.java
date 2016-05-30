@@ -38,18 +38,18 @@ public class SkillAdapter extends ArrayAdapter<Skill> {
 
         TextView name = (TextView)v.findViewById(R.id.skill_name);
 //        Log.i("Skill name",skill.getName());
-        name.setText(skill.getName());
+        name.setText(skill.getFullName());
 
 
         TextView price = (TextView) v.findViewById(R.id.skill_price);
-        price.setText(skill.getPriceOfNextLevel()+"");
+        price.setText("Price : " + skill.getPriceOfNextLevel()+"");
 
         Button upgrade = (Button)v.findViewById(R.id.skill_upgrade_button);
         upgrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Game.getInstance().levelUpSkill(skill.getName());
-                notifyDataSetInvalidated();
+                notifyDataSetChanged();
             }
         });
 

@@ -52,8 +52,7 @@ public class SkillManager {
         return skillList;
     }
 
-    private Skill findSkill(String homework) {
-        Log.i("Homework name",homework);
+    public Skill findSkill(String homework) {
         if(homework.equalsIgnoreCase("Mathematics")){
             return math;
         }

@@ -14,8 +14,7 @@
         android:layout_height="60dp"
         android:background="@drawable/pen1"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="Name"
@@ -24,8 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_horizontal"
-        android:textSize="10pt"
-        android:layout_marginTop="30dp"
+        android:textSize="8pt"
         android:layout_below="@+id/stationery_image"
         android:layout_alignParentStart="true" />
 
@@ -34,7 +32,7 @@
         android:id="@+id/stationery_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="8pt"
+        android:textSize="6pt"
         android:gravity="center_horizontal"
         android:layout_below="@+id/stationery_name"
         android:layout_alignParentStart="true" />

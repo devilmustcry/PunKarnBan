@@ -50,7 +50,6 @@ public class DamagePool implements Runnable {
                 text.setText("+"+damage+" word");
                 text.setY(text.getStartY());
 //                text.setVisibility(View.VISIBLE);
-                Log.i("Have",getNumText()+"");
                 return;
             }
         }

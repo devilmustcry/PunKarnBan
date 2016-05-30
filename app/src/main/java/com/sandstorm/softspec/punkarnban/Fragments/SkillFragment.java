@@ -53,6 +53,7 @@ public class SkillFragment extends Fragment {
         skills.clear();
 
         for(Skill skill : Game.getInstance().getPlayer().getSkillManager().getSkillList()){
+            Log.i("Skill price",skill.getName() +" "+skill.getPriceOfNextLevel()+"");
             skills.add(skill);
         }
 

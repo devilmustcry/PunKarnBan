@@ -49,13 +49,7 @@ public class RecruitFragment extends Fragment {
     }
 
     private void setList() {
-//        Log.i("Setting","Set list in recruit");
-//        recruits.clear();
-//        recruits = Game.getInstance().getRecruits();
-//        for(Recruit recruit : recruits) {
-//            Log.i("Recruit",recruit.getName());
-//        }
-//        recruitAdapter.notifyDataSetChanged();
+
         recruits.clear();
         for(Recruit recruit : Game.getInstance().getRecruits()) {
             recruits.add(recruit);
