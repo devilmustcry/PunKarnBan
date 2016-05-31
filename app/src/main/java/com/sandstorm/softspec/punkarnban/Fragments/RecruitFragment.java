@@ -30,7 +30,6 @@ public class RecruitFragment extends Fragment {
 
     private RecruitAdapter recruitAdapter;
 
-    private TextView totalText;
 
     private View v;
 
@@ -38,7 +37,6 @@ public class RecruitFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.recruit_layout, container, false);
-        totalText = (TextView)v.findViewById(R.id.recruit_total);
         setListView();
         return v;
     }
@@ -61,4 +59,7 @@ public class RecruitFragment extends Fragment {
         recruitAdapter.notifyDataSetChanged();
 
     }
+
+
+
 }

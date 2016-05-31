@@ -14,6 +14,7 @@ import com.sandstorm.softspec.punkarnban.Models.Works.Project;
 import com.sandstorm.softspec.punkarnban.Models.Works.ProjectFactory;
 import com.sandstorm.softspec.punkarnban.Models.Works.Work;
 import com.sandstorm.softspec.punkarnban.Models.Works.WorkFactory;
+import com.sandstorm.softspec.punkarnban.Utility.DecimalConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -234,6 +235,11 @@ public class Game extends Observable {
             if(recruit.getLevel()!=0)
              recruitDamage+=recruit.getDPS();
         }
+        String estimatedDamage = DecimalConverter.getInstance().convert(recruitDamage);
+
+
+        setChanged();
+        notifyObservers(estimatedDamage);
 
 
     }

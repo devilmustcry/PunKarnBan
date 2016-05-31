@@ -56,8 +56,8 @@ public class StationeryFragment extends Fragment {
 
         price = (TextView) v.findViewById(R.id.stationery_price);
 
-        price.setText(new DecimalConverter(stationery.getPrice()).convert());
-
+        price.setText(DecimalConverter.getInstance().convert(stationery.getPrice()));
+        
         stationeryUpgrade = (Button) v.findViewById(R.id.stationery_upgrade);
         stationeryUpgrade.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -102,6 +102,11 @@ public class MainActivity extends AppCompatActivity implements Observer{
     private DamagePool damagePool ; // damage pool (graphic reason)
 
     /**
+     *
+     */
+    private TextView totalRecruitDamageText;
+
+    /**
      * Create an activity
      * @param savedInstanceState : Don't know what is it....
      */
@@ -134,11 +139,11 @@ public class MainActivity extends AppCompatActivity implements Observer{
             public void onClick(View v) {
                 changeImage();//change image when tap
                 int damage = game.tap();//invoke game tap and return the damage
-                if(damagePool == null){
-                    damagePool =  new DamagePool(getApplicationContext(),background);
+                if (damagePool == null) {
+                    damagePool = new DamagePool(getApplicationContext(), background);
                     damagePool.start();
                 }
-                damagePool.addPool(getApplicationContext(),background,damage);//add into damagePool
+                damagePool.addPool(getApplicationContext(), background, damage);//add into damagePool
 
             }
         });
@@ -189,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
         level = (TextView) findViewById(R.id.game_level);
         level.setText(game.getPresentLevel() + "");
 
+        totalRecruitDamageText = (TextView) findViewById(R.id.recruit_total);
 
         setBackground();
 
@@ -278,13 +284,17 @@ public class MainActivity extends AppCompatActivity implements Observer{
             knowledgePoint.post(new Runnable() {
                 @Override
                 public void run() {
-                    DecimalConverter converter = new DecimalConverter(player.getKnowledge());
-                    knowledgePoint.setText(converter.convert());
+                    knowledgePoint.setText(DecimalConverter.getInstance().convert(player.getKnowledge()));
                 }
             });
 
         }
 
+        if(data.getClass() == String.class) {
+            String totalDamage = (String) data;
+
+            totalRecruitDamageText.setText(totalDamage);
+        }
 
     }
 

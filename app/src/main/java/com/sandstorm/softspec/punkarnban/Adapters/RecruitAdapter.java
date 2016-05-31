@@ -51,7 +51,6 @@ public class RecruitAdapter extends ArrayAdapter<Recruit> {
             levelUp.setText("Level Up");
         }
 
-
         levelUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,4 +62,5 @@ public class RecruitAdapter extends ArrayAdapter<Recruit> {
         return v;
 
     }
+
 }

@@ -9,17 +9,16 @@ import java.util.Locale;
  */
 public class DecimalConverter {
 
-    private long number;
 
-    public DecimalConverter(int number) {
-        this.number = number;
+    private static DecimalConverter instance;
+
+    public static DecimalConverter getInstance() {
+        if(instance == null)
+            instance = new DecimalConverter();
+        return  instance;
     }
 
-    public DecimalConverter(long number) {
-        this.number = number;
-    }
-
-    public String convert() {
+    public String convert(long number) {
         NumberFormat nf = NumberFormat.getInstance(Locale.US);
         double converted = number;
         nf.setRoundingMode(RoundingMode.UNNECESSARY);
@@ -40,11 +39,5 @@ public class DecimalConverter {
 
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-    public void setNumber(long number) {
-        this.number = number;
-    }
 
 }
