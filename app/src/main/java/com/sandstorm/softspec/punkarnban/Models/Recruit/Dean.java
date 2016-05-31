@@ -13,7 +13,19 @@ public class Dean extends Recruit {
     @Override
     public void levelUp() {
         plusLevel();
-        setPrice(FormulaCalculator.getInstance().calculate(650000, 1.05, getLevel()));
-        setDPS(FormulaCalculator.getInstance().calculate(8000, 1.02, getLevel()));
+        setAttribute();
+    }
+
+    @Override
+    public void setAttribute() {
+        if(getLevel() == 0) {
+            setPrice(650000);
+            setDPS(8000);
+        }
+        else {
+            setPrice(FormulaCalculator.getInstance().calculate(650000, 1.05, getLevel()));
+            setDPS(FormulaCalculator.getInstance().calculate(8000, 1.02, getLevel()));
+        }
+
     }
 }

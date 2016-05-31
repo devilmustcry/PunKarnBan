@@ -14,7 +14,19 @@ public class Senior extends Recruit {
     @Override
     public void levelUp() {
         plusLevel();
-        setPrice(FormulaCalculator.getInstance().calculate(1000, 1.05, getLevel()));
-        setDPS(FormulaCalculator.getInstance().calculate(30, 1.02, getLevel()));
+        setAttribute();
+    }
+
+    @Override
+    public void setAttribute() {
+        if(getLevel() == 0) {
+            setPrice(1000);
+            setDPS(30);
+        }
+        else {
+            setPrice(FormulaCalculator.getInstance().calculate(1000, 1.05, getLevel()));
+            setDPS(FormulaCalculator.getInstance().calculate(30, 1.02, getLevel()));
+        }
+
     }
 }

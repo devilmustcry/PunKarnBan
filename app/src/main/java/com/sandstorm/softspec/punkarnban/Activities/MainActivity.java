@@ -24,7 +24,14 @@ import com.sandstorm.softspec.punkarnban.Graphic.HealthBar;
 import com.sandstorm.softspec.punkarnban.State.DefualtState;
 import com.sandstorm.softspec.punkarnban.State.TapState;
 import com.sandstorm.softspec.punkarnban.Utility.DecimalConverter;
+import com.sandstorm.softspec.punkarnban.Utility.FileReader;
+import com.sandstorm.softspec.punkarnban.Utility.FileWriter;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -72,12 +79,6 @@ public class MainActivity extends AppCompatActivity implements Observer{
     private Game game;
 
     /**
-     * val use to set the image (will change into more suitable way later)
-     */
-
-    private int val = 0;
-
-    /**
      * knowledgePoint show in game
      */
     private TextView knowledgePoint;
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initComponents();
+//        initComponents();
 
     }
 
@@ -126,12 +127,30 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
         game = Game.getInstance(); //get instance from game
         game.addObserver(this); // add this as an obsever to observe game
+
+        restart();
+
+        Log.i("Game Level",game.getPresentLevel()+"");
+
         background = (RelativeLayout) findViewById(R.id.relative);
 
         tap = (TapImage) findViewById(R.id.tap); //get image from view
 
         state = new DefualtState(this,tap);
 
+        healthBar = (HealthBar) findViewById(R.id.work_health_bar);
+        game.initWork();
+        healthBar.setNameText(game.getWork().getName());
+        healthBar.setHealthText("0/" + game.getWork().getHp());
+        healthBar.setMax(game.getWork().getHp());
+
+        knowledgePoint = (TextView) findViewById(R.id.player_knowledge);
+        knowledgePoint.setText(game.getPlayer().getKnowledge()+"");
+
+        level = (TextView) findViewById(R.id.game_level);
+        level.setText(game.getPresentLevel() + "");
+
+        totalRecruitDamageText = (TextView) findViewById(R.id.recruit_total);
 
 
         tap.setOnClickListener(new View.OnClickListener() {// set onclick listener for image
@@ -139,11 +158,11 @@ public class MainActivity extends AppCompatActivity implements Observer{
             public void onClick(View v) {
                 changeImage();//change image when tap
                 int damage = game.tap();//invoke game tap and return the damage
-                if (damagePool == null) {
-                    damagePool = new DamagePool(getApplicationContext(), background);
-                    damagePool.start();
-                }
-                damagePool.addPool(getApplicationContext(), background, damage);//add into damagePool
+//                if (damagePool == null) {
+//                    damagePool = new DamagePool(getApplicationContext(), background);
+//                    damagePool.start();
+//                }
+//                damagePool.addPool(getApplicationContext(), background, damage);//add into damagePool
 
             }
         });
@@ -183,21 +202,14 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
 
         //Find Healthbar from view
-        healthBar = (HealthBar) findViewById(R.id.work_health_bar);
-        game.initWork();
-        healthBar.setNameText(game.getWork().getName());
-        healthBar.setHealthText("0/" + game.getWork().getHp());
-        healthBar.setMax(game.getWork().getHp());
 
-        knowledgePoint = (TextView) findViewById(R.id.player_knowledge);
-
-        level = (TextView) findViewById(R.id.game_level);
-        level.setText(game.getPresentLevel() + "");
-
-        totalRecruitDamageText = (TextView) findViewById(R.id.recruit_total);
 
         setBackground();
 
+        if(game.getRecruitDamage()!=0) {
+            game.startRecruitTimer();
+            totalRecruitDamageText.setText(game.getRecruitDamage()+"");
+        }
     }
 
     private void setBackground() {
@@ -324,4 +336,60 @@ public class MainActivity extends AppCompatActivity implements Observer{
     public ImageView getTapImage() {
         return tap;
     }
+
+    //---------------------------------------------------------Save/Load Code
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("Stop", "Call onStop");
+        FileWriter.write(game.saveState());
+        FileWriter.write(game.getPlayer().saveState());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        game.stopTimer();
+        upgradeTab.removeAllTabs();
+    }
+
+    //    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        Log.i("Destroy", "Call onDestroy");
+//
+//        FileWriter.write(game.saveState());
+//
+//    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("Resume", "Call onResume");
+
+        initComponents();
+
+    }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//           initComponents();
+//
+//    }
+
+    public void restart() {
+        game.restore(FileReader.readGame());
+        game.getPlayer().restore(FileReader.readPlayer());
+    }
+
+    //    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        Log.i("Pause", "Call onPause");
+//
+//        FileWriter.write(game.saveState());
+//    }
 }

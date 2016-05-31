@@ -37,6 +37,11 @@ public class Stationery {
         return level;
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+        setAttribute();
+    }
+
     public long getPrice(){
         return Math.round(price);
     }
@@ -47,8 +52,19 @@ public class Stationery {
 
     public void levelUp(){
         level++;
-        price = FormulaCalculator.getInstance().calculate(100,1.15,level);
-        wpt = FormulaCalculator.getInstance().calculate(3,1.1,level);
+        setAttribute();
+    }
+    private void setAttribute() {
+        if(level == 1){
+            price = 100;
+            wpt = 3;
+        }
+        else {
+            price = FormulaCalculator.getInstance().calculate(100,1.15,level);
+            wpt = FormulaCalculator.getInstance().calculate(3,1.1,level);
+        }
+
+
     }
 
 

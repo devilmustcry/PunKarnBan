@@ -34,10 +34,26 @@ public class Skill{
 
     public void levelUp() {
         level++;
-        priceOfNextLevel = FormulaCalculator.getInstance().calculate(20,1.01,level);
-        skill_wpt = FormulaCalculator.getInstance().calculate(5,1.01,level);
-        Log.i("Skill Description : ",name + " " + priceOfNextLevel+ " " + skill_wpt);
+        setAttribute();
+    }
 
+    public void setAttribute() {
+        if(level == 0) {
+            priceOfNextLevel = 20;
+            skill_wpt = 5;
+        }else {
+            priceOfNextLevel = FormulaCalculator.getInstance().calculate(20, 1.01, level);
+            skill_wpt = FormulaCalculator.getInstance().calculate(5, 1.01, level);
+        }
+
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+        setAttribute();
+    }
+    public int getLevel() {
+        return level;
     }
 
     public String getFullName() {

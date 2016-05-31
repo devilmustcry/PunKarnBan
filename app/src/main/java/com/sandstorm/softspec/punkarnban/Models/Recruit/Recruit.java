@@ -33,6 +33,8 @@ public abstract class Recruit {
 
     public abstract void levelUp();
 
+    public abstract void setAttribute();
+
     public int getPrice(){
         return price;
     }
@@ -43,6 +45,7 @@ public abstract class Recruit {
 
     public void setLevel(int level) {
         this.level = level;
+        setAttribute();
     }
 
     public void setPrice(int price) {

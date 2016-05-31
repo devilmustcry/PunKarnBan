@@ -13,7 +13,19 @@ public class Chancellor extends Recruit {
     public void levelUp() {
 
         plusLevel();
-        setPrice(FormulaCalculator.getInstance().calculate(3000000, 1.05, getLevel()));
-        setDPS(FormulaCalculator.getInstance().calculate(42000, 1.02, getLevel()));
+        setAttribute();
+    }
+
+    @Override
+    public void setAttribute() {
+        if(getLevel() == 0) {
+            setPrice(3000000);
+            setDPS(42000);
+        }
+        else {
+            setPrice(FormulaCalculator.getInstance().calculate(3000000, 1.05, getLevel()));
+            setDPS(FormulaCalculator.getInstance().calculate(42000, 1.02, getLevel()));
+        }
+
     }
 }

@@ -17,7 +17,18 @@ public class Nerd extends Recruit {
     @Override
     public void levelUp() {
         plusLevel();
-        setPrice(FormulaCalculator.getInstance().calculate(10, 1.05, getLevel()));
-        setDPS(FormulaCalculator.getInstance().calculate(1,1.02,getLevel()));
+        setAttribute();
+    }
+
+    @Override
+    public void setAttribute() {
+        if(getLevel() == 0) {
+            setPrice(10);
+            setDPS(1);
+        }
+        else {
+            setPrice(FormulaCalculator.getInstance().calculate(10, 1.05, getLevel()));
+            setDPS(FormulaCalculator.getInstance().calculate(1, 1.02, getLevel()));
+        }
     }
 }

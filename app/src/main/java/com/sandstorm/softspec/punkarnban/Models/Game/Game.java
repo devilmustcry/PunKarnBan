@@ -16,6 +16,7 @@ import com.sandstorm.softspec.punkarnban.Models.Works.Work;
 import com.sandstorm.softspec.punkarnban.Models.Works.WorkFactory;
 import com.sandstorm.softspec.punkarnban.Utility.DecimalConverter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -83,8 +84,8 @@ public class Game extends Observable {
      * Constructor
      */
     private Game() {
-        player = new Player("Name");
-        level = getLevelFromSaved();
+        player = new Player();
+        level = 1;
         setDefaultFactory();
         work = initWork();
         process = 0;
@@ -100,6 +101,7 @@ public class Game extends Observable {
         recruits.add(new Dean());
         recruits.add(new Chancellor());
         recruitDamage = 0;
+
     }
 
     /**
@@ -114,6 +116,7 @@ public class Game extends Observable {
      * Start timer for recruit
      */
     public void startRecruitTimer() {
+        recruitTimer = new Timer();
 
         recruitTimer.schedule(new TimerTask() {
             @Override
@@ -124,11 +127,17 @@ public class Game extends Observable {
 //                    instance.checkLevelUp();
 //                }
                 process+= recruitDamage;
-                instance.checkLevelUp();
+                checkLevelUp();
 
             }
         }, 0, 1000);
 
+
+    }
+
+    public void stopTimer() {
+            recruitTimer.cancel();
+            recruitTimer = null;
 
     }
 
@@ -220,7 +229,6 @@ public class Game extends Observable {
             notifyObservers(player);
 
             if(recruitTimer == null) {
-                recruitTimer = new Timer();
                 startRecruitTimer();
             }
 
@@ -230,13 +238,18 @@ public class Game extends Observable {
 
     }
 
-    private void setRecruitDamage() {
+    private void setRecruitDamageOutput() {
+        recruitDamage = 0;
         for(Recruit recruit : recruits) {
             if(recruit.getLevel()!=0)
-             recruitDamage+=recruit.getDPS();
+                recruitDamage+=recruit.getDPS();
         }
-        String estimatedDamage = DecimalConverter.getInstance().convert(recruitDamage);
+    }
 
+    private void setRecruitDamage() {
+
+        setRecruitDamageOutput();
+        String estimatedDamage = DecimalConverter.getInstance().convert(recruitDamage);
 
         setChanged();
         notifyObservers(estimatedDamage);
@@ -318,6 +331,10 @@ public class Game extends Observable {
         return false;
     }
 
+    public int[] getRecruitsLevel() {
+        return new int []{recruits.get(0).getLevel(),recruits.get(1).getLevel(),recruits.get(2).getLevel(),recruits.get(3).getLevel(),recruits.get(4).getLevel()} ;
+    }
+
     private class projectTimerTask extends TimerTask {
 
         private Project work;
@@ -381,4 +398,39 @@ public class Game extends Observable {
     public int getRecruitDamage() {
         return recruitDamage;
     }
+
+    //------------------------------------------------------------------- Save/Load Code
+
+    public GameMemento saveState() {
+        return new GameMemento(level,getRecruitsLevel());
+    }
+
+    public void restore(GameMemento m) {
+        Log.i("Restoring", "Start Restoring game");
+        if(m==null)
+            return;
+        this.level = m.level;
+        Log.i("Restoring", "Restore Level to : " + level);
+
+        for(int i =0;i<recruits.size();i++){
+            this.recruits.get(i).setLevel(m.recruits[i]);
+        }
+
+        setRecruitDamageOutput();
+
+    }
+
+
+    public static class GameMemento implements Serializable {
+        private int level;
+        private int [] recruits;
+
+
+        private GameMemento(int level,int [] recruits) {
+            this.level = level;
+            this.recruits = recruits;
+        }
+    }
+
+
 }

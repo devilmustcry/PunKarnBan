@@ -14,7 +14,18 @@ public class Teacher extends Recruit {
     @Override
     public void levelUp() {
         plusLevel();
-        setPrice(FormulaCalculator.getInstance().calculate(70000, 1.05, getLevel()));
-        setDPS(FormulaCalculator.getInstance().calculate(500, 1.02, getLevel()));
+        setAttribute();
+    }
+
+    @Override
+    public void setAttribute() {
+        if(getLevel() == 0) {
+            setPrice(70000);
+            setDPS(500);
+        }else {
+            setPrice(FormulaCalculator.getInstance().calculate(70000, 1.05, getLevel()));
+            setDPS(FormulaCalculator.getInstance().calculate(500, 1.02, getLevel()));
+        }
+
     }
 }

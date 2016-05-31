@@ -52,6 +52,18 @@ public class SkillManager {
         return skillList;
     }
 
+    public int [] getSkillsLevels() {
+        return new int[]{math.getLevel(),phy.getLevel(),chem.getLevel(),eng.getLevel(),bio.getLevel()};
+    }
+
+    public void setSkillsLevels(int [] levels) {
+        math.setLevel(levels[0]);
+        phy.setLevel(levels[1]);
+        chem.setLevel(levels[2]);
+        eng.setLevel(levels[3]);
+        bio.setLevel(levels[4]);
+    }
+
     public Skill findSkill(String homework) {
         if(homework.equalsIgnoreCase("Mathematics")){
             return math;
