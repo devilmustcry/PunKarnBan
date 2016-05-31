@@ -97,6 +97,11 @@ public class MainActivity extends AppCompatActivity implements Observer{
      */
     private TapState state;
     /**
+     * Damage pool(List of damage text)
+     */
+    private DamagePool damagePool ; // damage pool (graphic reason)
+
+    /**
      * Create an activity
      * @param savedInstanceState : Don't know what is it....
      */
@@ -122,18 +127,17 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
         state = new DefualtState(this,tap);
 
-        final DamagePool damagePool = new DamagePool(); // damage pool (graphic reason)
 
-
-        Thread t = new Thread(damagePool); //create a thread
-
-        t.start();//start a thread
 
         tap.setOnClickListener(new View.OnClickListener() {// set onclick listener for image
             @Override
             public void onClick(View v) {
                 changeImage();//change image when tap
                 int damage = game.tap();//invoke game tap and return the damage
+                if(damagePool == null){
+                    damagePool =  new DamagePool(getApplicationContext(),background);
+                    damagePool.start();
+                }
                 damagePool.addPool(getApplicationContext(),background,damage);//add into damagePool
 
             }
@@ -294,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
         level.post(new Runnable() {
             @Override
             public void run() {
-                level.setText(game.getPresentLevel()+"");
+                level.setText(game.getPresentLevel() + "");
             }
         });
     }

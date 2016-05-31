@@ -61,7 +61,7 @@ public class TappingState implements TapState {
             case "The greatest ever made pencil" :
                 return R.drawable.student9_2;
             case "Pen" :
-                return R.drawable.student1_2;
+                return R.drawable.student10_2;
 
         }
         return R.drawable.student1_2;

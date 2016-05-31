@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.sandstorm.softspec.punkarnban.Adapters.RecruitAdapter;
 import com.sandstorm.softspec.punkarnban.Models.Game.Game;
@@ -29,12 +30,15 @@ public class RecruitFragment extends Fragment {
 
     private RecruitAdapter recruitAdapter;
 
+    private TextView totalText;
+
     private View v;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.recruit_layout, container, false);
+        totalText = (TextView)v.findViewById(R.id.recruit_total);
         setListView();
         return v;
     }
@@ -49,7 +53,7 @@ public class RecruitFragment extends Fragment {
     }
 
     private void setList() {
-
+        Log.i("Setting","setList");
         recruits.clear();
         for(Recruit recruit : Game.getInstance().getRecruits()) {
             recruits.add(recruit);

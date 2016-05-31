@@ -58,7 +58,7 @@ public class DefualtState implements TapState {
             case "The greatest ever made pencil" :
                 return R.drawable.student9_1;
             case "Pen" :
-                return R.drawable.student1_1;
+                return R.drawable.student10_1;
 
         }
         return R.drawable.student1_1;

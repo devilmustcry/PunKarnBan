@@ -33,7 +33,7 @@ public class Player {
         stationery = new Stationery();
         skillManager = new SkillManager();
         setWpt(stationery.getWPT());
-        knowledge = 0;
+        knowledge = 1000000000;
 
 
 

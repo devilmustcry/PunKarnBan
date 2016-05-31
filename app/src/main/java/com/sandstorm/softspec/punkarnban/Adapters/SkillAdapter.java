@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sandstorm.softspec.punkarnban.Models.Game.Game;
@@ -35,10 +36,30 @@ public class SkillAdapter extends ArrayAdapter<Skill> {
         }
 
         final Skill skill = getItem(position);
+        ImageView image = (ImageView)v.findViewById(R.id.skill_picture) ;
 
         TextView name = (TextView)v.findViewById(R.id.skill_name);
 //        Log.i("Skill name",skill.getName());
         name.setText(skill.getFullName());
+
+        switch (skill.getName()){
+            case "Mathematics":
+                image.setImageResource(R.drawable.math_sk);
+                break;
+            case "Chemistry" :
+                image.setImageResource(R.drawable.chem_sk);
+                break;
+            case "English" :
+                image.setImageResource(R.drawable.english_sk);
+                break;
+            case "Physics" :
+                image.setImageResource(R.drawable.physic_sk);
+                break;
+            case "Biology" :
+                image.setImageResource(R.drawable.bio_sk);
+                break;
+
+        }
 
 
         TextView price = (TextView) v.findViewById(R.id.skill_price);

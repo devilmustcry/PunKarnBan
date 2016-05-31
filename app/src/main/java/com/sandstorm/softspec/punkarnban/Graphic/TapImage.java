@@ -48,7 +48,7 @@ public class TapImage extends ImageView {
 
         Rect bound = new Rect();
         textPaint.getTextBounds(time, 0, time.length(), bound);
-        textPaint.setColor(Color.RED);
+        textPaint.setColor(Color.BLACK);
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);
         textPaint.setTextSize(50);
         int x = (int)(getWidth()/2.35  - bound.centerX());

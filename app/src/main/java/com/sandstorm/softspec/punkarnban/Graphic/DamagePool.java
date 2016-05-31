@@ -11,12 +11,24 @@ import java.util.List;
 /**
  * Created by Warata on 5/27/16 AD.
  */
-public class DamagePool implements Runnable {
+public class DamagePool extends Thread{
 
     private List<DamageText> damageTextList;
 
-    public DamagePool() {
+    public DamagePool(Context context,RelativeLayout ll) {
         this.damageTextList = new ArrayList<DamageText>();
+        for(int i = 0 ; i < 10 ; i++) {
+            DamageText text = new DamageText(context);
+//            text.setText("+" + 0 + " word");
+            text.setTextColor(Color.RED);
+            text.setX((float) (ll.getWidth() * 0.55));
+//            text.setY((float) (ll.getHeight() * 0.5));
+            text.setActive(false);
+            ll.addView(text);
+            text.setStartY((float) (ll.getHeight() * 0.5));
+            Log.e("Hello", String.valueOf(ll.getWidth()));
+            damageTextList.add(text);
+        }
     }
 
 
@@ -24,18 +36,12 @@ public class DamagePool implements Runnable {
     public void run() {
         while (true) {
             try {
-                Thread.sleep(10);
+                Thread.sleep(2);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             for (final DamageText text : damageTextList) {
                 if (text.isActive()) {
-//                    text.post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            text.move();
-//                        }
-//                    });
                     text.move();
                 }
 
@@ -47,9 +53,8 @@ public class DamagePool implements Runnable {
         for(DamageText text : damageTextList) {
             if(!text.isActive()){
                 text.active();
-                text.setText("+"+damage+" word");
+                text.setText("+" + damage + " word");
                 text.setY(text.getStartY());
-//                text.setVisibility(View.VISIBLE);
                 return;
             }
         }

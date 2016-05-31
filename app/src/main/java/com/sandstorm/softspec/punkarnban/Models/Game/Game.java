@@ -74,6 +74,11 @@ public class Game extends Observable {
     private int level;
 
     /**
+     * Total Damage From Recruit
+     */
+    private int recruitDamage;
+
+    /**
      * Constructor
      */
     private Game() {
@@ -93,7 +98,7 @@ public class Game extends Observable {
         recruits.add(new Teacher());
         recruits.add(new Dean());
         recruits.add(new Chancellor());
-
+        recruitDamage = 0;
     }
 
     /**
@@ -112,11 +117,13 @@ public class Game extends Observable {
         recruitTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                for (Recruit recruit : recruits) {
-                    if(recruit.isHire())
-                        process += recruit.getDPS();
-                    instance.checkLevelUp();
-                }
+//                for (Recruit recruit : recruits) {
+//                    if(recruit.isHire())
+//                        process += recruit.getDPS();
+//                    instance.checkLevelUp();
+//                }
+                process+= recruitDamage;
+                instance.checkLevelUp();
 
             }
         }, 0, 1000);
@@ -206,6 +213,7 @@ public class Game extends Observable {
             }
             player.decreaseKnowledge(recruits.get(index).getPrice());
             recruits.get(index).levelUp();
+            setRecruitDamage();
 
             setChanged();
             notifyObservers(player);
@@ -216,6 +224,15 @@ public class Game extends Observable {
             }
 
 
+        }
+
+
+    }
+
+    private void setRecruitDamage() {
+        for(Recruit recruit : recruits) {
+            if(recruit.getLevel()!=0)
+             recruitDamage+=recruit.getDPS();
         }
 
 
@@ -353,5 +370,9 @@ public class Game extends Observable {
             setChanged();
             notifyObservers(player);
         }
+    }
+
+    public int getRecruitDamage() {
+        return recruitDamage;
     }
 }

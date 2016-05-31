@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="#FFFFFF"
     tools:context=".Activities.MainActivity"
     >
 
@@ -16,33 +16,41 @@
         android:layout_height="wrap_content"
 
         android:orientation="vertical"
-        >
+        android:layout_gravity="center_horizontal|top">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="31dp"
+            android:orientation="horizontal">
 
-            >
-
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="7pt"
-                android:text="Knowledge : "
-               />
+                android:layout_height="match_parent"
+                android:id="@+id/imageView"
+                android:src="@drawable/knowledge"
+                android:layout_row="0"
+                android:layout_column="7"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/player_knowledge"
+                android:layout_alignBottom="@+id/player_knowledge" />
+
             <TextView
                 android:id="@+id/player_knowledge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="7pt"
                 android:text="0"
-                />
+                android:layout_row="0"
+                android:layout_column="9"
+                android:layout_marginEnd="146dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="false" />
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -51,17 +59,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Level : "
-                android:textSize="7pt"/>
+                android:textSize="7pt"
+                android:layout_alignBaseline="@+id/game_level"
+                android:layout_alignBottom="@+id/game_level"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/textView" />
 
             <TextView
                 android:id="@+id/game_level"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="7pt"
-                android:text="0"/>
+                android:text="0"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/textView" />
 
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,9 +149,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
-
 
 
 </FrameLayout>

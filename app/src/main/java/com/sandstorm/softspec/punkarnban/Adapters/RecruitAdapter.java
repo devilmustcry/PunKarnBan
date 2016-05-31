@@ -56,7 +56,7 @@ public class RecruitAdapter extends ArrayAdapter<Recruit> {
             @Override
             public void onClick(View v) {
                 Game.getInstance().levelUpRecruit(recruit.getName());
-                notifyDataSetInvalidated();
+                notifyDataSetChanged();
             }
         });
 

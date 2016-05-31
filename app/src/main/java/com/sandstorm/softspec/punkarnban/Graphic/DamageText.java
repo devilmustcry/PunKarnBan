@@ -33,16 +33,22 @@ public class DamageText extends TextView {
     }
 
     public synchronized void move() {
-        setY(getY()-10);
-        if(getY()<=0) {
-            isActive = false;
-            setY(getY()-50);
-        }
+//        while(getY() > 0) {
+            setY(getY()-3);
+            if (getY() <= 0) {
+                isActive = false;
+                setY(-50);
+            }
+//        }
     }
 
     public synchronized void active() {
         this.isActive = true;
 
+    }
+
+    public synchronized  void setActive(boolean bool){
+        isActive = bool;
     }
 
     public synchronized void setStartY(float startY) {
