@@ -30,7 +30,7 @@ public class Player {
         stationery = new Stationery();
         skillManager = new SkillManager();
         setWpt(stationery.getWPT());
-        knowledge = 0;
+        knowledge = 1000000;
 
     }
 
@@ -52,6 +52,8 @@ public class Player {
         this.wpt = wpt;
 
     }
+
+    public int getWpt(){ return wpt; }
 
     public void gainKnowledge(int knowledge) {
         this.knowledge+=knowledge;

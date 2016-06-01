@@ -87,6 +87,12 @@ public class MainActivity extends AppCompatActivity implements Observer{
     private TextView knowledgePoint;
 
     /**
+     * player word per tap point
+     */
+
+    private TextView wptPoint;
+
+    /**
      * Level present in game
      */
     private TextView level;
@@ -160,6 +166,11 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
         knowledgePoint = (TextView) findViewById(R.id.player_knowledge);
         knowledgePoint.setText(game.getPlayer().getKnowledge() + "");
+
+        wptPoint = (TextView)findViewById(R.id.player_wpt);
+        wptPoint.setText(game.getPlayer().tap() + "");
+
+        Log.e("WPT", game.getPlayer().getWpt() + "");
 
         level = (TextView) findViewById(R.id.game_level);
         level.setText(game.getPresentLevel() + "");
@@ -313,7 +324,8 @@ public class MainActivity extends AppCompatActivity implements Observer{
         if(data.getClass() == Homework.class ) {
 
             Work work = (Work) data;
-            setAllText(work);
+            setWorkText(work);
+            setAllText();
             projectSet = false;
             tap.setTime("");
             tap.postInvalidate();
@@ -322,7 +334,8 @@ public class MainActivity extends AppCompatActivity implements Observer{
         else if(data.getClass() == Project.class) {
             Project work = (Project) data;
             if(!projectSet) {
-                setAllText(work);
+                setWorkText(work);
+                setAllText();
                 setBackground();
                 projectSet = true;
 
@@ -350,25 +363,42 @@ public class MainActivity extends AppCompatActivity implements Observer{
         }
 
         if(data.getClass() == String.class) {
-            String totalDamage = (String) data;
 
-            totalRecruitDamageText.setText(totalDamage);
+            setAllText();
             setRecruitPresentImage();
         }
+
 
     }
 
 
-
-    private void setAllText(Work work) {
+    private void setWorkText(Work work) {
         healthBar.setProgress(0);
         healthBar.setHealthText("0/" + work.getHp());
         healthBar.setNameText(work.getName());
         healthBar.setMax(work.getHp());
+    }
+
+    private void setAllText() {
+
+        totalRecruitDamageText.post(new Runnable() {
+            @Override
+            public void run() {
+                totalRecruitDamageText.setText(game.getRecruitDamage()+"");
+
+            }
+        });
+        setRecruitPresentImage();
         level.post(new Runnable() {
             @Override
             public void run() {
                 level.setText(game.getPresentLevel() + "");
+            }
+        });
+        wptPoint.post(new Runnable() {
+            @Override
+            public void run() {
+                wptPoint.setText(game.getPlayer().tap()+"");
             }
         });
     }

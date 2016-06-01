@@ -255,10 +255,9 @@ public class Game extends Observable {
     private void setRecruitDamage() {
 
         setRecruitDamageOutput();
-        String estimatedDamage = DecimalConverter.getInstance().convert(recruitDamage);
 
         setChanged();
-        notifyObservers(estimatedDamage);
+        notifyObservers("set");
 
 
     }
@@ -392,6 +391,9 @@ public class Game extends Observable {
             player.levelUpStationary();
         setChanged();
         notifyObservers(player);
+
+        setChanged();
+        notifyObservers("set");
     }
 
     public List<Recruit> getRecruits() {
@@ -404,6 +406,9 @@ public class Game extends Observable {
             player.getSkillManager().levelUp(name);
             setChanged();
             notifyObservers(player);
+
+            setChanged();
+            notifyObservers("set");
         }
     }
 

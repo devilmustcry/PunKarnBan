@@ -29,12 +29,7 @@ public class DecimalConverter {
 
             return String.format("%sM", nf.format(converted));
         }
-        else if(number>=1000) {
-            converted = number / 1000;
-            nf.setMaximumFractionDigits(10);
-            return String.format("%sK",nf.format(converted));
 
-        }
         return String.format("%.0f",converted);
 
     }
