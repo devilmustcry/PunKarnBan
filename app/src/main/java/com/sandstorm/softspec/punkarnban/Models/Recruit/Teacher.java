@@ -23,8 +23,8 @@ public class Teacher extends Recruit {
             setPrice(70000);
             setDPS(500);
         }else {
-            setPrice(FormulaCalculator.getInstance().calculate(70000, 1.05, getLevel()));
-            setDPS(FormulaCalculator.getInstance().calculate(500, 1.02, getLevel()));
+            setPrice(FormulaCalculator.getInstance().calculate(70000, 1.05, getLevel() , 1000*getLevel()));
+            setDPS(FormulaCalculator.getInstance().calculate(500, 1.02, getLevel() , 500*getLevel()));
         }
 
     }

@@ -27,8 +27,8 @@ public class Nerd extends Recruit {
             setDPS(1);
         }
         else {
-            setPrice(FormulaCalculator.getInstance().calculate(10, 1.05, getLevel()));
-            setDPS(FormulaCalculator.getInstance().calculate(1, 1.02, getLevel()));
+            setPrice(FormulaCalculator.getInstance().calculate(10, 1.05, getLevel() , 10 * getLevel()));
+            setDPS(FormulaCalculator.getInstance().calculate(1, 1.02, getLevel() , 5 * getLevel()));
         }
     }
 }

@@ -17,8 +17,8 @@ public class FormulaCalculator {
         return calculator;
     }
 
-    public int calculate(int a1,double ratio,int level) {
-        return (int)Math.ceil(a1 * Math.pow(ratio,level));
+    public int calculate(int a1,double ratio,int level , int constant) {
+        return (int)Math.ceil(a1 * Math.pow(ratio,level)) + constant ;
     }
 
 }

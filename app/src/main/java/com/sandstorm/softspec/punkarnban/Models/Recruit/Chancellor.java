@@ -23,8 +23,8 @@ public class Chancellor extends Recruit {
             setDPS(42000);
         }
         else {
-            setPrice(FormulaCalculator.getInstance().calculate(3000000, 1.05, getLevel()));
-            setDPS(FormulaCalculator.getInstance().calculate(42000, 1.02, getLevel()));
+            setPrice(FormulaCalculator.getInstance().calculate(3000000, 1.05, getLevel() , 100000*getLevel()));
+            setDPS(FormulaCalculator.getInstance().calculate(42000, 1.02, getLevel() , 50000*getLevel()));
         }
 
     }

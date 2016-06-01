@@ -60,8 +60,8 @@ public class Stationery {
             wpt = 3;
         }
         else {
-            price = FormulaCalculator.getInstance().calculate(100,1.15,level);
-            wpt = FormulaCalculator.getInstance().calculate(3,1.1,level);
+            price = FormulaCalculator.getInstance().calculate(100,1.15,level, 10 * level);
+            wpt = FormulaCalculator.getInstance().calculate(3,1.1,level, 5 * level);
         }
 
 

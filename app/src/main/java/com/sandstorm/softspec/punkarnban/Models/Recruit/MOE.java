@@ -24,8 +24,8 @@ public class MOE extends Recruit {
             setDPS(96000);
         }
         else {
-            setPrice(FormulaCalculator.getInstance().calculate(10000000, 1.05, getLevel()));
-            setDPS(FormulaCalculator.getInstance().calculate(96000, 1.02, getLevel()));
+            setPrice(FormulaCalculator.getInstance().calculate(10000000, 1.05, getLevel() , 1000000 * getLevel()));
+            setDPS(FormulaCalculator.getInstance().calculate(96000, 1.02, getLevel() , 500000*getLevel()));
         }
     }
 }

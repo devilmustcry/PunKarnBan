@@ -35,11 +35,11 @@ public class HomeworkFactory extends WorkFactory {
     public Work create(int level) {
         if(index==5)
             index = 0;
-        return new Homework(getWorkName()[index++],calculate(hp,1.05,level),calculate(exp,1.015,level));
+        return new Homework(getWorkName()[index++],calculate(hp,1.10,level,20*level),calculate(exp,1.10,level,15*level));
     }
 
-    public int calculate(int a1,double ratio,int level) {
-       return FormulaCalculator.getInstance().calculate(a1,ratio,level);
+    public int calculate(int a1,double ratio,int level,int constant) {
+       return FormulaCalculator.getInstance().calculate(a1,ratio,level,constant);
     }
 
     @Override

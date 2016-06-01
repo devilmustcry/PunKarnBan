@@ -9,7 +9,7 @@ public class Senior extends Recruit {
 
 
 
-    public Senior() { super("Senior", 30,1000); }
+    public Senior() { super("Senior", 30,1500); }
 
     @Override
     public void levelUp() {
@@ -20,12 +20,12 @@ public class Senior extends Recruit {
     @Override
     public void setAttribute() {
         if(getLevel() == 0) {
-            setPrice(1000);
+            setPrice(1500);
             setDPS(30);
         }
         else {
-            setPrice(FormulaCalculator.getInstance().calculate(1000, 1.05, getLevel()));
-            setDPS(FormulaCalculator.getInstance().calculate(30, 1.02, getLevel()));
+            setPrice(FormulaCalculator.getInstance().calculate(1000, 1.05, getLevel() , 100 * getLevel()));
+            setDPS(FormulaCalculator.getInstance().calculate(30, 1.1, getLevel() ,  50 * getLevel() ));
         }
 
     }

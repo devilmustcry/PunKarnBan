@@ -23,8 +23,8 @@ public class Dean extends Recruit {
             setDPS(8000);
         }
         else {
-            setPrice(FormulaCalculator.getInstance().calculate(650000, 1.05, getLevel()));
-            setDPS(FormulaCalculator.getInstance().calculate(8000, 1.02, getLevel()));
+            setPrice(FormulaCalculator.getInstance().calculate(650000, 1.05, getLevel() ,10000*getLevel() ));
+            setDPS(FormulaCalculator.getInstance().calculate(8000, 1.02, getLevel() , 50000*getLevel() ));
         }
 
     }

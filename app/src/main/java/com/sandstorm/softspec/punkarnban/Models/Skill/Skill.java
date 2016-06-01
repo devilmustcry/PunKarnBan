@@ -42,8 +42,8 @@ public class Skill{
             priceOfNextLevel = 20;
             skill_wpt = 5;
         }else {
-            priceOfNextLevel = FormulaCalculator.getInstance().calculate(20, 1.01, level);
-            skill_wpt = FormulaCalculator.getInstance().calculate(5, 1.01, level);
+            priceOfNextLevel = FormulaCalculator.getInstance().calculate(20, 1.15, level , level );
+            skill_wpt = FormulaCalculator.getInstance().calculate(5, 1.1 , level , 5*level );
         }
 
     }
