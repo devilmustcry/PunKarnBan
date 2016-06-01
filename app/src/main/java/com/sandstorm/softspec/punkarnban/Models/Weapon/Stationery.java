@@ -57,11 +57,11 @@ public class Stationery {
     private void setAttribute() {
         if(level == 1){
             price = 100;
-            wpt = 3;
+            wpt = 5;
         }
         else {
-            price = FormulaCalculator.getInstance().calculate(100,1.15,level, 10 * level);
-            wpt = FormulaCalculator.getInstance().calculate(3,1.1,level, 5 * level);
+            price = FormulaCalculator.getInstance().calculate(100,1.5,level, 100 * level);
+            wpt = FormulaCalculator.getInstance().calculate(5,1.1,level, 50 * level);
         }
 
 
