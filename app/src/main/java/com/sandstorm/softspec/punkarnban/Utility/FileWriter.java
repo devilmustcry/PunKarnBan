@@ -8,10 +8,13 @@ import com.sandstorm.softspec.punkarnban.Models.Game.Game;
 import com.sandstorm.softspec.punkarnban.Models.Player.Player;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+
+import Memento.Memento;
 
 /**
  * Created by FTTX on 5/31/2016 AD.
@@ -20,23 +23,25 @@ public class FileWriter {
 
     static String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Punkarnban";
 
-    public static void write(Game.GameMemento gameMemento) {
-
+    public static void write(Memento memento,Context context) {
         File dir = new File(path);
         if(!dir.exists())
             dir.mkdirs();
 
 
-        String fileName = "/game.txt";
+        String fileName = "/" + memento.getName()+".txt";
 
         File file = new File(path+fileName);
 
         try {
             FileOutputStream fileOut = new FileOutputStream(file);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(gameMemento);
+            out.writeObject(memento);
+            out.close();
+            fileOut.close();
         } catch (FileNotFoundException e) {
             Log.e("File","Can't find file");
+            internalWrite(memento,context);
             e.printStackTrace();
         } catch (IOException e) {
             Log.e("File","IOException");
@@ -44,28 +49,28 @@ public class FileWriter {
         }
     }
 
-    public static void write(Player.PlayerMemento playerMemento) {
-        File dir = new File(path);
-        if(!dir.exists())
-            dir.mkdirs();
-
-        String fileName = "/player.txt";
-
-        File file = new File(path+fileName);
-
+    private static void internalWrite(Memento memento,Context context) {
+        //Internal Write
+        String fileName = memento.getName()+".txt";
         try {
-            FileOutputStream fileOut = new FileOutputStream(file);
+            FileOutputStream fileOut = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(playerMemento);
+            out.writeObject(memento);
+            out.close();
+            fileOut.close();
         } catch (FileNotFoundException e) {
-            Log.e("File","Can't find file");
+            Log.e("File","Can't Write file in internal");
             e.printStackTrace();
         } catch (IOException e) {
-            Log.e("File","IOException");
             e.printStackTrace();
         }
 
+
     }
+
+
+
+
 
 
 

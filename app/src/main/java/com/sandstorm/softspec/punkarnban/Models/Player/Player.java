@@ -2,7 +2,6 @@ package com.sandstorm.softspec.punkarnban.Models.Player;
 
 import android.util.Log;
 
-import com.sandstorm.softspec.punkarnban.Models.Items.Item;
 import com.sandstorm.softspec.punkarnban.Models.Skill.Skill;
 import com.sandstorm.softspec.punkarnban.Models.Skill.SkillManager;
 import com.sandstorm.softspec.punkarnban.Models.Weapon.Stationery;
@@ -10,6 +9,8 @@ import com.sandstorm.softspec.punkarnban.Models.Weapon.Stationery;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import Memento.Memento;
 
 /**
  * Created by FTTX on 5/7/2016 AD.
@@ -29,7 +30,7 @@ public class Player {
         stationery = new Stationery();
         skillManager = new SkillManager();
         setWpt(stationery.getWPT());
-        knowledge = 0;
+        knowledge = 1000000;
 
     }
 
@@ -79,20 +80,23 @@ public class Player {
 
     //-----------------------------------------------------------------Save/Load Code
 
-    public PlayerMemento saveState() {
+    public Memento saveState() {
         return new PlayerMemento(stationery.getLevel(),skillManager.getSkillsLevels(),knowledge);
     }
 
-    public void restore(PlayerMemento m) {
-        if(m==null)
+    public void restore(Memento memento) {
+        if(memento==null)
             return;
+        if(memento.getClass()!=PlayerMemento.class)
+            return;
+        PlayerMemento m = (PlayerMemento) memento;
         this.knowledge = m.knowledge;
         stationery.setLevel(m.stationeryLevel);
         skillManager.setSkillsLevels(m.skillLevel);
 
     }
 
-    public static class PlayerMemento implements Serializable {
+    public static class PlayerMemento extends Memento {
 
         private int stationeryLevel;
 
@@ -101,6 +105,7 @@ public class Player {
         private int knowledge;
 
         private PlayerMemento(int stationeryLevel,int [] skillLevel, int knowledge) {
+            super("player");
             this.stationeryLevel = stationeryLevel;
             this.skillLevel = skillLevel;
             this.knowledge = knowledge;

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.sandstorm.softspec.punkarnban.Models.Player.Player;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.Chancellor;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.Dean;
+import com.sandstorm.softspec.punkarnban.Models.Recruit.MOE;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.Nerd;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.Recruit;
 import com.sandstorm.softspec.punkarnban.Models.Recruit.Senior;
@@ -22,6 +23,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import Memento.Memento;
 
 /**
  * Controller Class
@@ -100,6 +103,7 @@ public class Game extends Observable {
         recruits.add(new Teacher());
         recruits.add(new Dean());
         recruits.add(new Chancellor());
+        recruits.add(new MOE());
         recruitDamage = 0;
 
     }
@@ -136,8 +140,10 @@ public class Game extends Observable {
     }
 
     public void stopTimer() {
+        if(recruitTimer!=null) {
             recruitTimer.cancel();
             recruitTimer = null;
+        }
 
     }
 
@@ -332,7 +338,13 @@ public class Game extends Observable {
     }
 
     public int[] getRecruitsLevel() {
-        return new int []{recruits.get(0).getLevel(),recruits.get(1).getLevel(),recruits.get(2).getLevel(),recruits.get(3).getLevel(),recruits.get(4).getLevel()} ;
+        int [] recruitsLevel = new int [recruits.size()];
+        for(int i =0;i<recruits.size();i++) {
+            recruitsLevel[i] = recruits.get(i).getLevel();
+        }
+
+//        return new int []{recruits.get(0).getLevel(),recruits.get(1).getLevel(),recruits.get(2).getLevel(),recruits.get(3).getLevel(),recruits.get(4).getLevel()} ;
+        return recruitsLevel;
     }
 
     private class projectTimerTask extends TimerTask {
@@ -399,17 +411,29 @@ public class Game extends Observable {
         return recruitDamage;
     }
 
+    public int getCurrentProcess() {return process;}
+
     //------------------------------------------------------------------- Save/Load Code
 
-    public GameMemento saveState() {
-        return new GameMemento(level,getRecruitsLevel());
-    }
+//    public GameMemento saveState() {
+//        return new GameMemento(level,getRecruitsLevel());
+//    }
 
-    public void restore(GameMemento m) {
+    public Memento saveState() { return new GameMemento(level,getRecruitsLevel(),process);}
+
+    public void restore(Memento memento) {
+        if(memento == null)
+            return;
+        if(memento.getClass()!=GameMemento.class){
+            return;
+        }
+        GameMemento m = (GameMemento) memento;
+
         Log.i("Restoring", "Start Restoring game");
         if(m==null)
             return;
         this.level = m.level;
+        this.process = m.process;
         Log.i("Restoring", "Restore Level to : " + level);
 
         for(int i =0;i<recruits.size();i++){
@@ -421,14 +445,17 @@ public class Game extends Observable {
     }
 
 
-    public static class GameMemento implements Serializable {
+    public static class GameMemento extends Memento {
         private int level;
         private int [] recruits;
+        private int process;
 
 
-        private GameMemento(int level,int [] recruits) {
+        private GameMemento(int level,int [] recruits,int process) {
+            super("game");
             this.level = level;
             this.recruits = recruits;
+            this.process = process;
         }
     }
 

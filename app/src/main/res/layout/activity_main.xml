@@ -132,6 +132,61 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/student1_1" />
 
+                <ImageView
+                    android:id="@+id/recruit_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/r_1"
+                    android:visibility="invisible"/>
+                <ImageView
+                    android:id="@+id/recruit_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/r_2"
+                    android:visibility="invisible"/>
+                <ImageView
+                    android:id="@+id/recruit_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/r_3"
+                    android:visibility="invisible"/>
+                <ImageView
+                    android:id="@+id/recruit_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/r_4"
+                    android:visibility="invisible"/>
+                <ImageView
+                    android:id="@+id/recruit_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/r_5"
+                    android:visibility="invisible"/>
+                <ImageView
+                    android:id="@+id/recruit_6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/r_6"
+                    android:visibility="invisible"/>
+
 
 
             </RelativeLayout>

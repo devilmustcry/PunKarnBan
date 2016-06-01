@@ -1,5 +1,6 @@
 package com.sandstorm.softspec.punkarnban.Utility;
 
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
@@ -11,6 +12,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
+
+import Memento.Memento;
 
 /**
  * Created by FTTX on 5/31/2016 AD.
@@ -20,17 +24,20 @@ public class FileReader {
     static String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Punkarnban";
 
 
-    public static Game.GameMemento readGame() {
-        String fileName = "/game.txt";
-        File file = new File(path+fileName);
+    public static Memento readMemento(String name,Context context) {
+        File file = new File(path+"/"+name+".txt");
 
         try {
             FileInputStream fileIn = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fileIn);
-            return (Game.GameMemento) ois.readObject();
+            Memento m = (Memento) ois.readObject();
+            fileIn.close();
+            ois.close();
+            return m;
         } catch (FileNotFoundException e) {
-            Log.e("File","Can't find file");
+            Log.e("File", "Can't find file");
             e.printStackTrace();
+            return internalRead(name,context);
         } catch (IOException e) {
             Log.e("File","IOException");
             e.printStackTrace();
@@ -41,24 +48,27 @@ public class FileReader {
         return null;
     }
 
-    public static Player.PlayerMemento readPlayer() {
-        String fileName = "/player.txt";
-        File file = new File(path+fileName);
+    private static Memento internalRead(String name,Context context) {
+        String fileName = name+".txt";
 
         try {
-            FileInputStream fileIn = new FileInputStream(file);
+            FileInputStream fileIn = context.openFileInput(fileName);
             ObjectInputStream ois = new ObjectInputStream(fileIn);
-            return (Player.PlayerMemento) ois.readObject();
+            Memento m = (Memento) ois.readObject();
+            fileIn.close();
+            ois.close();
+            return m;
         } catch (FileNotFoundException e) {
-            Log.e("File","Can't find file");
+            Log.e("File","Can't read file in internal");
+            e.printStackTrace();
+        } catch (StreamCorruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            Log.e("File","IOException");
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            Log.e("Class","ClassNotFoundException");
             e.printStackTrace();
         }
         return null;
     }
+
 }

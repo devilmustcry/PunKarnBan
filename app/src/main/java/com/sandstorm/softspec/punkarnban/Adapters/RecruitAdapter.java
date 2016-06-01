@@ -36,6 +36,9 @@ public class RecruitAdapter extends ArrayAdapter<Recruit> {
 
         final Recruit recruit = getItem(position);
 
+        ImageView image = (ImageView) v.findViewById(R.id.recruit_picture);
+        image.setImageResource(findRecriut(recruit.getName()));
+
         TextView name = (TextView) v.findViewById(R.id.recruit_name);
         name.setText(recruit.getFullName());
 
@@ -60,6 +63,20 @@ public class RecruitAdapter extends ArrayAdapter<Recruit> {
         });
 
         return v;
+
+    }
+
+    private int findRecriut(String name) {
+
+        switch (name) {
+            case "Nerd" : return R.drawable.r1;
+            case "Senior" : return R.drawable.r2;
+            case "Teacher" : return R.drawable.r3;
+            case "Dean" : return R.drawable.r4;
+            case "Chancellor" : return R.drawable.r5;
+            case "MOE" : return R.drawable.r6;
+            default : return R.drawable.r1;
+        }
 
     }
 

@@ -15,6 +15,7 @@ import com.sandstorm.softspec.punkarnban.Adapters.PagerAdapter;
 import com.sandstorm.softspec.punkarnban.Graphic.TapImage;
 import com.sandstorm.softspec.punkarnban.Models.Game.Game;
 import com.sandstorm.softspec.punkarnban.Models.Player.Player;
+import com.sandstorm.softspec.punkarnban.Models.Recruit.Recruit;
 import com.sandstorm.softspec.punkarnban.Models.Works.Homework;
 import com.sandstorm.softspec.punkarnban.Models.Works.Project;
 import com.sandstorm.softspec.punkarnban.Models.Works.Work;
@@ -32,6 +33,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -108,6 +111,16 @@ public class MainActivity extends AppCompatActivity implements Observer{
     private TextView totalRecruitDamageText;
 
     /**
+     *
+     */
+    private TabLayout.TabLayoutOnPageChangeListener pageChangeListener;
+
+    /**
+     *
+     */
+    private List<ImageView> recruitImage;
+
+    /**
      * Create an activity
      * @param savedInstanceState : Don't know what is it....
      */
@@ -130,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
         restart();
 
-        Log.i("Game Level",game.getPresentLevel()+"");
+        Log.i("Game Level", game.getPresentLevel() + "");
 
         background = (RelativeLayout) findViewById(R.id.relative);
 
@@ -141,11 +154,12 @@ public class MainActivity extends AppCompatActivity implements Observer{
         healthBar = (HealthBar) findViewById(R.id.work_health_bar);
         game.initWork();
         healthBar.setNameText(game.getWork().getName());
-        healthBar.setHealthText("0/" + game.getWork().getHp());
+        healthBar.setProgress(game.getCurrentProcess());
+        healthBar.setHealthText(game.getCurrentProcess() + "/" + game.getWork().getHp());
         healthBar.setMax(game.getWork().getHp());
 
         knowledgePoint = (TextView) findViewById(R.id.player_knowledge);
-        knowledgePoint.setText(game.getPlayer().getKnowledge()+"");
+        knowledgePoint.setText(game.getPlayer().getKnowledge() + "");
 
         level = (TextView) findViewById(R.id.game_level);
         level.setText(game.getPresentLevel() + "");
@@ -180,7 +194,8 @@ public class MainActivity extends AppCompatActivity implements Observer{
         upgradeDetail.setAdapter(adapter);
 
         //addOnPageChangeListener and setOnTabSelectedListener
-        upgradeDetail.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(upgradeTab));
+         pageChangeListener = new TabLayout.TabLayoutOnPageChangeListener(upgradeTab);
+        upgradeDetail.addOnPageChangeListener(pageChangeListener);
         upgradeTab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -206,10 +221,42 @@ public class MainActivity extends AppCompatActivity implements Observer{
 
         setBackground();
 
+        setRecruitImage();
+
+
         if(game.getRecruitDamage()!=0) {
             game.startRecruitTimer();
-            totalRecruitDamageText.setText(game.getRecruitDamage()+"");
+            totalRecruitDamageText.setText(game.getRecruitDamage() + "");
+            setRecruitPresentImage();
         }
+    }
+
+    private void setRecruitPresentImage() {
+        for(int i = 0;i<game.getRecruits().size();i++) {
+            if(game.getRecruits().get(i).getLevel()!=0) {
+                final int index = i;
+                recruitImage.get(i).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        recruitImage.get(index).setVisibility(View.VISIBLE);
+
+                    }
+                });
+            }
+        }
+
+    }
+
+    private void setRecruitImage() {
+
+        recruitImage = new ArrayList<ImageView>();
+        recruitImage.add((ImageView) findViewById(R.id.recruit_1));
+        recruitImage.add((ImageView) findViewById(R.id.recruit_2));
+        recruitImage.add((ImageView) findViewById(R.id.recruit_3));
+        recruitImage.add((ImageView) findViewById(R.id.recruit_4));
+        recruitImage.add((ImageView) findViewById(R.id.recruit_5));
+        recruitImage.add((ImageView) findViewById(R.id.recruit_6));
+
     }
 
     private void setBackground() {
@@ -306,6 +353,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
             String totalDamage = (String) data;
 
             totalRecruitDamageText.setText(totalDamage);
+            setRecruitPresentImage();
         }
 
     }
@@ -344,8 +392,8 @@ public class MainActivity extends AppCompatActivity implements Observer{
     protected void onStop() {
         super.onStop();
         Log.i("Stop", "Call onStop");
-        FileWriter.write(game.saveState());
-        FileWriter.write(game.getPlayer().saveState());
+        FileWriter.write(game.saveState(),getApplicationContext());
+        FileWriter.write(game.getPlayer().saveState(),getApplicationContext());
     }
 
     @Override
@@ -353,6 +401,7 @@ public class MainActivity extends AppCompatActivity implements Observer{
         super.onPause();
         game.stopTimer();
         upgradeTab.removeAllTabs();
+        upgradeDetail.removeOnPageChangeListener(pageChangeListener);
     }
 
     //    @Override
@@ -381,8 +430,11 @@ public class MainActivity extends AppCompatActivity implements Observer{
 //    }
 
     public void restart() {
-        game.restore(FileReader.readGame());
-        game.getPlayer().restore(FileReader.readPlayer());
+//        game.restore(FileReader.readGame());
+//        game.getPlayer().restore(FileReader.readPlayer());
+        game.restore(FileReader.readMemento("game",getApplicationContext()));
+        game.getPlayer().restore(FileReader.readMemento("player",getApplicationContext()));
+
     }
 
     //    @Override
