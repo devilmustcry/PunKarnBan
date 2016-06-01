@@ -14,7 +14,7 @@ Git repository link :  https://github.com/devilmustcry/PunKarnBan
       <dd>3) Arut     Thanomwattana  5710546437</dd>
 
 
-#1) Project explanation 
+#1) Project Explanation 
 	
 		The concept of this game is student doing homework in various subject (Mathematics,Biology, 
 	Chemistry, Physics and English).The main purpose is to tap the screen to help student 
