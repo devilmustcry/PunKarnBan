@@ -31,6 +31,11 @@ public class Player {
         skillManager = new SkillManager();
         setWpt(stationery.getWPT());
         knowledge = 0;
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 
     }
 
